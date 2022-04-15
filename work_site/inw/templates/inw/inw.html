@@ -4,6 +4,29 @@
 
 {% block content %}
 <div class="container">
-    
+    <form method="POST" action="{% url 'myapp:inw' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="myfile" class="form-control">
+        <button class="btn-primary" type="submit">Submit</button>
+    </form>
+    <div>
+        <table class="table ">
+            <thead class="thead-dark">
+                <tr>
+                    {% for heading in dict %}
+                        <th>{{heading}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tr>
+                {% for keys,values in dict.items %}
+                    <tr>
+                    {% for y in values %}
+                        <td>{{y}}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tr>
+        </table>
 </div>
 {% endblock %}
