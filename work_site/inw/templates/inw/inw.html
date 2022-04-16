@@ -4,22 +4,27 @@
 
 {% block content %}
 <div class="container">
-    <form method="POST" action="{% url 'myapp:inw' %}" enctype="multipart/form-data">
+    <form method="POST" action="{% url 'myapp:inw' %}" enctype="multipart/form-data" class="form-inline">
         {% csrf_token %}
-        <input type="file" name="myfile" class="form-control">
-        <button class="btn-primary" type="submit">Submit</button>
+        <div class="form-group">
+            <label class="sr-only" for="SAP">Plik SAP</label>
+            <input type="file" name="myfile" class="form-control mb-2 mr-sm-2" id="SAP">
+            <label class="sr-only" for="INW">Plik INW</label>
+            <input type="file" name="inwfile" class="form-control mb-2 mr-sm-2" id="INW">
+            <button class="btn btn-primary mb-2" type="submit">Submit</button>
+        </div>
     </form>
     <div>
         <table class="table ">
             <thead class="thead-dark">
                 <tr>
-                    {% for heading in dict %}
+                    {% for heading in dict.columns %}
                         <th>{{heading}}</th>
                     {% endfor %}
                 </tr>
             </thead>
             <tr>
-                {% for keys,values in dict.items %}
+                {% for values in dict.data %}
                     <tr>
                     {% for y in values %}
                         <td>{{y}}</td>
