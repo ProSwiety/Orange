@@ -14,24 +14,5 @@
             <button class="btn btn-primary mb-2" type="submit">Submit</button>
         </div>
     </form>
-    <div>
-        <table class="table ">
-            <thead class="thead-dark">
-                <tr>
-                    {% for heading in dict.columns %}
-                        <th>{{heading}}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tr>
-                {% for values in dict.data %}
-                    <tr>
-                    {% for y in values %}
-                        <td>{{y}}</td>
-                    {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tr>
-        </table>
 </div>
 {% endblock %}
