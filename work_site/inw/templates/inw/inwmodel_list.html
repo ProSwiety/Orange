@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+<ul>
+  {% for ean in object_list %}
+    <li>{{ean.Nazwa}}</li>
+  {% endfor %}
+</ul>

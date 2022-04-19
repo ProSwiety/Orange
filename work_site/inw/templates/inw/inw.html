@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %} Inw {% endblock %}
 
@@ -15,24 +14,5 @@
             <button class="btn btn-primary mb-2" type="submit">Submit</button>
         </div>
     </form>
-    <div class="form-group">
-        <table class="table table-hover table-striped">
-            <thead>
-                <tr class="table-info">
-                    {% for heading in dict.columns %}
-                        <th>{{heading}}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tr>
-                {% for values in dict.data %}
-                    <tr>
-                    {% for y in values %}
-                        <td>{{y}}</td>
-                    {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tr>
-        </table>
 </div>
 {% endblock %}
