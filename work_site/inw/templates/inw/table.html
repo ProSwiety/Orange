@@ -16,10 +16,18 @@
             <tr>
                 <td>
                     {{ value.Nazwa }}
-                    <a href="/inw/delete_ean/{{value.id}}">DELETE</a>
+                    <ul>
+                        <li><a href="/inw/delete_ean/{{value.id}}"><button type="submit" class="btn-primary">Delete</button></a></li>
+                    </ul>
                 </td>
                 <td>{{ value.EAN }}</td>
-                <td>{{ value.Ilosc }}</td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ value.Ilosc }}>
+                        <button type="submit" class="btn-primary">OK</button>
+                    </form>
+                </td>
             </tr>
         {% endfor %}
     </table>

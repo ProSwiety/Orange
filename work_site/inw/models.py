@@ -14,3 +14,5 @@ class InwModel(models.Model):
         return f'{self.Nazwa} {self.EAN} {self.Ilosc}'
 
 
+
+

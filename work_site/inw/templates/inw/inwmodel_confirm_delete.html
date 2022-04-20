@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 
+{% block content %}
 <form method="POST">
     {% csrf_token %}
-    <input type="submit" value="Confirm Delete">
+    <div class="container">
+        <div>
+            {{object}}
+        </div>
+        <div>
+            <input class="btn-primary" type="submit" value="Confirm Delete">
+        </div>
+    </div>
 </form>
+{% endblock %}

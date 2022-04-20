@@ -1,3 +1,9 @@
 body {
     font-family: Serif;
 }
+#number {
+  width: 3em;
+}
+.mb4 {
+  margin-top: 1rem;
+}

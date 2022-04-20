@@ -8,5 +8,5 @@ urlpatterns = [
     path('table/',views.table_view, name='table'),
     path('test/',views.test_view, name='test'),
     path('delete_ean/<int:pk>',views.DeleteView.as_view(),name='delete_ean'),
-    path('list_ean/',views.ListEan.as_view(),name='list')
+    path('create_ean/',views.create_value,name='create_ean'),
 ]

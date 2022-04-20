@@ -2,22 +2,32 @@ from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 import pandas as pd
 from .models import InwModel
-from .forms import upload_form
-from django.views.generic import DeleteView,ListView
+from .forms import upload_form,EditForm,CreateForm
+from django.views.generic import DeleteView,UpdateView,CreateView
+from django.contrib import messages
 
 
 # Create your views here.
 
+def create_value(request):
+    if request.method == "POST":
+        ean_form = CreateForm(request.POST)
+        if ean_form.is_valid():
+            ean_form.save()
+        return redirect("myapp:table")
+    ean_form = CreateForm()
+    eans = InwModel.objects.all()
+    return render(request=request, template_name="inw/inwmodel_create.html", context={'ean_form': ean_form, 'eans': eans})
+
+class edit_value(UpdateView):
+    UpdateView.model = InwModel
+    UpdateView.fields = ['Ilosc']
+    UpdateView.template_name_suffix = 'table.html'
+    success_url = reverse_lazy('myapp:table')
+
 class delete_ean(DeleteView):
-    model = InwModel
-    success_url = reverse_lazy('myapp:delete_ean')
-
-class ListEan(ListView):
-    model = InwModel
-    queryset = InwModel.objects.all()
-
-
-
+    DeleteView.model = InwModel
+    DeleteView.success_url = reverse_lazy('myapp:table')
 
 def inw_view(request):
     if request.method == 'POST':
