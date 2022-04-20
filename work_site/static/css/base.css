@@ -1,9 +1,9 @@
 body {
     font-family: Serif;
 }
-#number {
-  width: 3em;
+
+.icon {
+    width: 1.5em;
+    height: auto;
 }
-.mb4 {
-  margin-top: 1rem;
-}
+

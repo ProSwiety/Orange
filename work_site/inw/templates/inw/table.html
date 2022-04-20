@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Table{% endblock %}
 
@@ -17,16 +18,15 @@
                 <td>
                     {{ value.Nazwa }}
                     <ul>
-                        <li><a href="/inw/delete_ean/{{value.id}}"><button type="submit" class="btn-primary">Delete</button></a></li>
+                        <li><a href="/inw/delete_ean/{{value.id}}"><img src="{% static 'images/trash.svg' %}"/></a></li>
                     </ul>
                 </td>
                 <td>{{ value.EAN }}</td>
                 <td>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ value.Ilosc }}>
-                        <button type="submit" class="btn-primary">OK</button>
-                    </form>
+                    {{ value.Ilosc }}>
+                    <ul>
+                        <li><a href="/inw/update/{{value.id}}"><img src="{% static 'images/pencil.svg' %}"/></a></li>
+                    </ul>
                 </td>
             </tr>
         {% endfor %}

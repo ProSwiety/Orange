@@ -7,10 +7,7 @@
     <form method="POST" action="{% url 'myapp:inw' %}" enctype="multipart/form-data" class="form-inline">
         {% csrf_token %}
         <div class="form-group">
-            <label class="sr-only" for="SAP">Plik SAP</label>
-            <input type="file" name="myfile" class="form-control mb-2 mr-sm-2" id="SAP">
-            <label class="sr-only" for="INW">Plik INW</label>
-            <input type="file" name="inwfile" class="form-control mb-2 mr-sm-2" id="INW">
+            {{form}}
             <button class="btn btn-primary mb-2" type="submit">Submit</button>
         </div>
     </form>
