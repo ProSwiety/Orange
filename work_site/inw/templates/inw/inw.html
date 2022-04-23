@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} Inw {% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="POST" action="{% url 'myapp:inw' %}" enctype="multipart/form-data" class="form-inline">
+        {% csrf_token %}
+        <div class="form-group">
+            {{form}}
+            <button class="btn btn-primary mb-2" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

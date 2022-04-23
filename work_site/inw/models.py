@@ -7,9 +7,6 @@ class InwModel(models.Model):
     EAN = models.IntegerField()
     Ilosc = models.IntegerField()
 
-    class Meta:
-        unique_together = ["Nazwa", "EAN", "Ilosc"]
-
     def __str__(self):
         return f'{self.Nazwa} {self.EAN} {self.Ilosc}'
 
