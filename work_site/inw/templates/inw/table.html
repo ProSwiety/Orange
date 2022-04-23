@@ -3,7 +3,6 @@
 {% block title %}Table{% endblock %}
 
 {% block content %}
-<div class="container">
     <table class="table table-hover">
         <thead class=>
             <tr>
@@ -16,8 +15,8 @@
             <tr>
                 <td>
                     {{ value.Nazwa }}
-                    <ul>
-                        <li><a href="/inw/delete_ean/{{value.id}}"><button type="submit" class="btn-primary">Delete</button></a></li>
+                    <ul class="nav">
+                        <li class="nav-item"><a class="nav-link active" href="/inw/delete/{{value.id}}">Delete</a></li>
                     </ul>
                 </td>
                 <td>{{ value.EAN }}</td>
@@ -25,12 +24,9 @@
                     <form method="post">
                         {% csrf_token %}
                         {{ value.Ilosc }}>
-                        <button type="submit" class="btn-primary">OK</button>
                     </form>
                 </td>
             </tr>
         {% endfor %}
     </table>
-
-</div>
 {% endblock %}

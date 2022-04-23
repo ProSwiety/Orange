@@ -4,9 +4,8 @@ from . import views
 app_name = 'myapp'
 
 urlpatterns = [
-    path('upload/',views.inw_view, name='inw'),
-    path('table/',views.table_view, name='table'),
-    path('test/',views.test_view, name='test'),
-    path('delete_ean/<int:pk>',views.DeleteView.as_view(),name='delete_ean'),
-    path('create_ean/',views.create_value,name='create_ean'),
+    path('table/',views.TableData.as_view(), name='table'),
+    path('upload/',views.UploadData.as_view(), name='upload'),
+    path('create/',views.CreateData.as_view(), name='create'),
+    path('delete/<int:pk>',views.DeleteData.as_view(), name='delete')
 ]

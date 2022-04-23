@@ -2,7 +2,7 @@ from django import forms
 from .models import InwModel
 
 
-class upload_form(forms.Form):
+class UploadFileForm(forms.Form):
     upload_field_sap = forms.FileField(widget=forms.ClearableFileInput(attrs={
         'class':"form-control mb-2 mr-sm-2",
         }), label='Plik SAP')
@@ -13,7 +13,7 @@ class upload_form(forms.Form):
 class EditForm(forms.Form):
     pass
 
-class CreateForm(forms.ModelForm):
+class CreateDataForm(forms.ModelForm):
     class Meta:
         model = InwModel
         fields = ["Nazwa", "EAN", "Ilosc"]
