@@ -13,6 +13,29 @@ class UploadData(View):
     def get(self,request):
         form = UploadFileForm
         return render(request, 'inw/upload_form_page.html', {'form':form})
+    def post(self, request, *args, **kwargs):
+        from .upload_scripts.upload_scripts import excel_inf_to_list, excel_sap_to_dict, process_excel_files
+        form = UploadFileForm(request.POST,request.FILES)
+        if form.is_valid():
+            df_sap = pd.read_excel(request.FILES['upload_field_sap'])
+            df_inw = pd.read_excel(request.FILES['upload_field_inw'])
+            inw_list = excel_inf_to_list(df_inw)
+            sap_dict = excel_sap_to_dict(df_sap)
+            new_data = process_excel_files(inw_list,sap_dict)
+            sql_data = {
+                'Nazwa': '',
+                'EAN': '',
+                'Ilosc': ''
+            }
+            number = -1
+            for keys in new_data['Ilosc']:
+                number += 1
+                sql_data['Ilosc'] = new_data['Ilosc'][number]
+                sql_data['EAN'] = new_data['EAN'][number]
+                sql_data['Nazwa'] = new_data['Nazwa'][number]
+                model = InwModel(**sql_data)
+                model.save()
+        return redirect('/inw/table')
 
 class TableData(View):
     def get(self,request):
