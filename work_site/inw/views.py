@@ -37,11 +37,17 @@ class UploadData(View):
                 model.save()
         return redirect('/inw/table')
 
+class EditData(UpdateView):
+    UpdateView.model = InwModel
+    UpdateView.fields = ['Ilosc']
+    UpdateView.template_name_suffix = '_update_form'
+    UpdateView.success_url = reverse_lazy('myapp:table')
+
 class TableData(View):
     def get(self,request):
         values = InwModel.objects.all()
         context = {'values': values}
-        return render(request, 'inw/table.html', context)
+        return render(request, 'inw/table_form.html', context)
 
 class DeleteData(DeleteView):
     model = InwModel

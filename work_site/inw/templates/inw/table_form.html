@@ -21,9 +21,12 @@
                 </td>
                 <td>{{ value.EAN }}</td>
                 <td>
+                    {{ value.Ilosc }}
                     <form method="post">
                         {% csrf_token %}
-                        {{ value.Ilosc }}>
+                        <ul class="nav">
+                            <li><a class="nav-item" href="/inw/update/{{value.id}}">Edit</a></li>
+                        </ul>
                     </form>
                 </td>
             </tr>

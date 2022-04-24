@@ -10,8 +10,14 @@ class UploadFileForm(forms.Form):
         'class':"form-control mb-2 mr-sm-2",
         }), label='Plik INW')
 
-class EditForm(forms.Form):
-    pass
+class EditForm(forms.ModelForm):
+    class Meta:
+        model = InwModel
+        fields = ["Ilosc"]
+        widgets = {
+            'Ilosc':forms.NumberInput()
+
+        }
 
 class CreateDataForm(forms.ModelForm):
     class Meta:
