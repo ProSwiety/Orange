@@ -27,14 +27,15 @@ class UploadData(View):
                 'EAN': '',
                 'Ilosc': ''
             }
-            number = -1
-            for keys in new_data['Ilosc']:
-                number += 1
-                sql_data['Ilosc'] = new_data['Ilosc'][number]
-                sql_data['EAN'] = new_data['EAN'][number]
-                sql_data['Nazwa'] = new_data['Nazwa'][number]
-                model = InwModel(**sql_data)
-                model.save()
+            index = -1
+            for value in new_data['Zapas ogółem']:
+                index += 1
+                if value != 0:
+                    sql_data['Ilosc'] = new_data['Zapas ogółem'][index]
+                    sql_data['EAN'] = new_data['EAN'][index]
+                    sql_data['Nazwa'] = new_data['Krótki tekst materiału'][index]
+                    model = InwModel(**sql_data)
+                    model.save()
         return redirect('/inw/table')
 
 class EditData(UpdateView):

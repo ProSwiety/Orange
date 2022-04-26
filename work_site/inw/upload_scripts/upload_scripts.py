@@ -31,14 +31,4 @@ def process_excel_files(inw,sap):
             sap['EAN'].append(value)
             sap['Krótki tekst materiału'].append(None)
             sap['Zapas ogółem'].append(1)
-    for value in sap['Zapas ogółem']:
-        if value == 0:
-            index = sap['Zapas ogółem'].index(value)
-            sap['EAN'].pop(index)
-            sap['Krótki tekst materiału'].pop(index)
-            sap['Zapas ogółem'].pop(index)
-    sap['Nazwa'] = sap['Krótki tekst materiału']
-    sap['Ilosc'] = sap['Zapas ogółem']
-    del sap['Krótki tekst materiału']
-    del sap['Zapas ogółem']
     return sap
