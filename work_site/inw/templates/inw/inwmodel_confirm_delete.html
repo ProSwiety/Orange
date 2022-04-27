@@ -3,13 +3,16 @@
 {% block content %}
 <form method="POST">
     {% csrf_token %}
-    <div class="container">
-        <div>
-            {{object}}
-        </div>
-        <div>
-            <input class="btn-primary" type="submit" value="Confirm Delete">
-        </div>
+    <div class="mb-0">
+        <h2>Usuwasz</h2>
+    </div>
+    <div class="mb-0">
+        <p>NAZWA: {{object.Nazwa}}</p>
+        <p>EAN: {{object.EAN}}</p>
+        <p>ILOŚĆ: {{object.Ilosc}}</p>
+    </div>
+    <div class="mb-0">
+        <input class="btn-primary" type="submit" value="Usuń">
     </div>
 </form>
 {% endblock %}

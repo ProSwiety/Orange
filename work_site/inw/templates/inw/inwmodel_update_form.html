@@ -4,9 +4,12 @@
 {% load crispy_forms_tags %}
 <form method="POST">
     {% csrf_token %}
-  <div class="form-control">
+    <div class="mb-0">
+        <h3>Edytuj</h3>
+    </div>
     {{form|crispy}}
-    <input class="btn-primary" type="submit" value="Update">
-  </div>
+    <div class="mb-0">
+        <input class="btn-primary" type="submit" value="Zapisz">
+    </div>
 </form>
 {% endblock %}
