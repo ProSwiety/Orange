@@ -5,17 +5,25 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        <label for="radio-braki">Braki</label>
-            <input id="radio-braki" type="radio" name="check" value="braki">
-        <label for="radio-nadwyzki">Nadwyzki</label>
-            <input id="radio-nadwyzki" type="radio" name="check" value="nadwyzki">
-        <input type="submit" value="Check">
+        <div class="form-check form-check-inline form-switch">
+            <input class="form-check-input" id="radio-lack" type="checkbox" role="switch" name="check1" value="lack">
+            <label class="form-check-label" for="radio-lack">Braki</label>
+        </div>
+        <div class="form-check form-check-inline form-switch">
+            <input class="form-check-input" id="radio-surplus" type="checkbox" role="switch" name="check2" value="surplus">
+            <label class="form-check-label" for="radio-surplus">Nadwyżki</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="submit" value="Check" class="btn-primary btn-sml">
+        </div>
+
+
         <table class="table table-hover">
             <thead class=>
                 <tr>
-                    <th>Nazwa</th>
+                    <th>NAZWA</th>
                     <th>EAN</th>
-                    <th>Ilość</th>
+                    <th>ILOŚĆ</th>
                 </tr>
             </thead>
             {% for value in values %}

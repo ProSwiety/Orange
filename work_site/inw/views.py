@@ -56,15 +56,18 @@ class TableData(View):
         context = {'values': values}
         return render(request, 'inw/table_form.html', context)
     def post(self,request):
-        if 'braki' in request.POST['check']:
+        if 'check1' in request.POST and 'check2' in request.POST:
+            values = InwModel.objects.all()
+            context = {'values': values}
+            return render(request, 'inw/table_form.html', context)
+        elif 'check1' in request.POST:
             values = InwModel.objects.filter(Ilosc__lt=0)
             context = {'values': values}
             return render(request, 'inw/table_form.html', context)
-        elif 'nadwyzki' in request.POST['check']:
+        elif 'check2' in request.POST:
             values = InwModel.objects.filter(Ilosc__gt=0)
             context = {'values': values}
             return render(request, 'inw/table_form.html', context)
-
 
 class DeleteData(DeleteView):
     model = InwModel

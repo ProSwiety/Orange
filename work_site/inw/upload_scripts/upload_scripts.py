@@ -32,3 +32,4 @@ def process_excel_files(inw,sap):
             sap['Krótki tekst materiału'].append(None)
             sap['Zapas ogółem'].append(1)
     return sap
+
