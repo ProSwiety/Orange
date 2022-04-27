@@ -3,11 +3,17 @@ from django.urls import reverse_lazy,reverse
 import pandas as pd
 from .models import InwModel
 from .forms import UploadFileForm,EditForm,CreateDataForm
-from django.views.generic import View,UpdateView,CreateView,DeleteView
+from django.views.generic import View,UpdateView,CreateView,DeleteView,ListView
 from django.contrib import messages
 
 
+
 # Create your views here.
+
+class TestList(ListView):
+    model = InwModel
+    queryset = InwModel.objects.filter(Ilosc__lt=0)
+    template_name = 'inw/test.html'
 
 class UploadData(View):
     def get(self,request):
@@ -49,6 +55,16 @@ class TableData(View):
         values = InwModel.objects.all()
         context = {'values': values}
         return render(request, 'inw/table_form.html', context)
+    def post(self,request):
+        if 'braki' in request.POST['check']:
+            values = InwModel.objects.filter(Ilosc__lt=0)
+            context = {'values': values}
+            return render(request, 'inw/table_form.html', context)
+        elif 'nadwyzki' in request.POST['check']:
+            values = InwModel.objects.filter(Ilosc__gt=0)
+            context = {'values': values}
+            return render(request, 'inw/table_form.html', context)
+
 
 class DeleteData(DeleteView):
     model = InwModel
