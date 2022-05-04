@@ -5,6 +5,7 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
+        <input type="submit" value="Delete">
         <div class="mb-0">
             <div class="form-check form-check-inline form-switch">
                 <input class="form-check-input" id="radio-lack" type="checkbox" role="switch" name="check1" value="lack">
@@ -30,10 +31,7 @@
             {% for value in values %}
                 <tr>
                     <td>
-                        {{ value.Nazwa }}
-                        <ul class="nav">
-                            <li class="nav-item"><a class="nav-link active" href="/inw/delete/{{value.id}}">Delete</a></li>
-                        </ul>
+                        <input type="checkbox" name="delete[]" value="{{value.id}}">  {{ value.Nazwa }}
                     </td>
                     <td>{{ value.EAN }}</td>
                     <td>

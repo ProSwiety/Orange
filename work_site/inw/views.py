@@ -56,22 +56,24 @@ class TableData(View):
         context = {'values': values}
         return render(request, 'inw/table_form.html', context)
     def post(self,request):
-        if 'check1' in request.POST and 'check2' in request.POST:
-            values = InwModel.objects.all()
-            context = {'values': values}
-            return render(request, 'inw/table_form.html', context)
-        elif 'check1' in request.POST:
-            values = InwModel.objects.filter(Ilosc__lt=0)
-            context = {'values': values}
-            return render(request, 'inw/table_form.html', context)
-        elif 'check2' in request.POST:
-            values = InwModel.objects.filter(Ilosc__gt=0)
-            context = {'values': values}
-            return render(request, 'inw/table_form.html', context)
+        if 'check1' in request.POST or 'check2' in request.POST:
+            if 'check1' in request.POST and 'check2' in request.POST:
+                values = InwModel.objects.all()
+                context = {'values': values}
+                return render(request, 'inw/table_form.html', context)
+            elif 'check1' in request.POST:
+                values = InwModel.objects.filter(Ilosc__lt=0)
+                context = {'values': values}
+                return render(request, 'inw/table_form.html', context)
+            elif 'check2' in request.POST:
+                values = InwModel.objects.filter(Ilosc__gt=0)
+                context = {'values': values}
+                return render(request, 'inw/table_form.html', context)
+        if 'delete[]' in request.POST:
+            id_list = request.POST.getlist('delete[]')
+            InwModel.objects.filter(id__in=id_list).delete()
+            return redirect('/inw/table')
 
-class DeleteData(DeleteView):
-    model = InwModel
-    success_url = reverse_lazy('myapp:table')
 
 #form dont load well change crispy to model form
 class CreateData(CreateView):
