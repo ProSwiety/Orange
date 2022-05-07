@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
-from django.urls import reverse_lazy,reverse
+from django.urls import reverse_lazy
 import pandas as pd
 from .models import InwModel
-from .forms import UploadFileForm,EditForm,CreateDataForm
-from django.views.generic import View,UpdateView,CreateView,DeleteView,ListView
+from .forms import UploadFileForm,CreateDataForm
+from django.views.generic import View,UpdateView,CreateView,ListView
 from django.contrib import messages
 
 
@@ -50,6 +50,7 @@ class EditData(UpdateView):
     UpdateView.template_name_suffix = '_update_form'
     UpdateView.success_url = reverse_lazy('myapp:table')
 
+
 class TableData(View):
     def get(self,request):
         values = InwModel.objects.all()
@@ -73,6 +74,17 @@ class TableData(View):
             id_list = request.POST.getlist('delete[]')
             InwModel.objects.filter(id__in=id_list).delete()
             return redirect('/inw/table')
+
+def table_sort_up(request):
+    values = InwModel.objects.order_by('-Ilosc')
+    context = {'values': values}
+    return render(request, 'inw/table_form.html', context)
+
+def table_sort_down(request):
+    values = InwModel.objects.order_by('Ilosc')
+    context = {'values': values}
+    return render(request, 'inw/table_form.html', context)
+
 
 
 #form dont load well change crispy to model form

@@ -5,7 +5,6 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        <input type="submit" value="Delete">
         <div class="mb-0">
             <div class="form-check form-check-inline form-switch">
                 <input class="form-check-input" id="radio-lack" type="checkbox" role="switch" name="check1" value="lack">
@@ -19,13 +18,20 @@
                 <input type="submit" value="Check" class="btn-primary btn-sml">
             </div>
         </div>
+        <div class="mb-1">
+            <input class="btn btn-primary" type="submit" value="Delete" >
+        </div>
 
         <table class="table table-hover">
             <thead class=>
                 <tr>
                     <th>NAZWA</th>
                     <th>EAN</th>
-                    <th>ILOŚĆ</th>
+                    <th>
+                        ILOŚĆ
+                        <a class="nav-item" href="{% url 'myapp:sortu' %}">Up</a>
+                        <a class="nav-item" href="{% url 'myapp:sortd' %}">Down</a>
+                    </th>
                 </tr>
             </thead>
             {% for value in values %}
