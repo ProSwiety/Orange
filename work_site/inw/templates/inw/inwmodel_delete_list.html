@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} Delete {% endblock %}
+
+{% block content %}
+<h1>Czy chcesz usunąć ?</h1>
+<form method="POST">
+    {% csrf_token %}
+    <ul>
+        {% for object in objects %}
+            <li>
+                {{object.Nazwa}}
+                {{object.EAN}}
+                {{object.Ilosc}}
+            </li>
+        {% endfor %}
+    </ul>
+    <button type="submit" class="btn btn-danger" name="confirm">Confirm Delete</button>
+    <a class="btn btn-primary" href="{% url 'myapp:table' %}">Wróć</a>
+</form>
+{% endblock %}

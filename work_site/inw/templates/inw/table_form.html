@@ -3,7 +3,7 @@
 {% block title %}Table{% endblock %}
 
 {% block content %}
-    <form method="post">
+    <form method="POST">
         {% csrf_token %}
         <div class="mb-0">
             <div class="form-check form-check-inline form-switch">
@@ -18,15 +18,16 @@
                 <input type="submit" value="Check" class="btn-primary btn-sml">
             </div>
         </div>
-        <div class="mb-1">
-            <input class="btn btn-primary" type="submit" value="Delete" >
-        </div>
-
+        </form>
+        <form action="{% url 'myapp:list' %}" method="GET">
+            <div class="mb-1">
+                <input class="btn btn-danger" type="submit" value="Delete" >
+            </div>
         <table class="table table-hover">
             <thead class=>
                 <tr>
                     <th>NAZWA</th>
-                    <th>EAN</th>
+                    <th>EAN</th>                    
                     <th>
                         ILOŚĆ
                         <a class="nav-item" href="{% url 'myapp:sortu' %}">Up</a>
@@ -52,5 +53,5 @@
                 </tr>
             {% endfor %}
         </table>
-    </form>
+        </form>
 {% endblock %}

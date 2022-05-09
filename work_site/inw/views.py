@@ -10,10 +10,15 @@ from django.contrib import messages
 
 # Create your views here.
 
-class TestList(ListView):
-    model = InwModel
-    queryset = InwModel.objects.filter(Ilosc__lt=0)
-    template_name = 'inw/test.html'
+def confirm_delete_list(request):
+    if request.method == 'GET':
+        id_list = request.GET.getlist('delete[]')
+        objects = InwModel.objects.filter(id__in=id_list)
+        return render(request, 'inw/inwmodel_delete_list.html', {'objects':objects})
+    if request.method == 'POST':
+        id_list = request.GET.getlist('delete[]')
+        objects = InwModel.objects.filter(id__in=id_list).delete()
+        return redirect('/inw/table')
 
 class UploadData(View):
     def get(self,request):
@@ -70,10 +75,6 @@ class TableData(View):
                 values = InwModel.objects.filter(Ilosc__gt=0)
                 context = {'values': values}
                 return render(request, 'inw/table_form.html', context)
-        if 'delete[]' in request.POST:
-            id_list = request.POST.getlist('delete[]')
-            InwModel.objects.filter(id__in=id_list).delete()
-            return redirect('/inw/table')
 
 def table_sort_up(request):
     values = InwModel.objects.order_by('-Ilosc')
