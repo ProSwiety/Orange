@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
-from openpyxl.styles import Font,Alignment,colors
+from openpyxl.styles import Font,Alignment
 from datetime import datetime
 from .models import InwModel
 from .forms import UploadFileForm,CreateDataForm
