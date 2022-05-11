@@ -1,14 +1,77 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 import pandas as pd
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Font,Alignment,colors
+from datetime import datetime
 from .models import InwModel
 from .forms import UploadFileForm,CreateDataForm
-from django.views.generic import View,UpdateView,CreateView,ListView
+from django.views.generic import View,UpdateView,CreateView
+from django.http import HttpResponse
 from django.contrib import messages
 
 
 
 # Create your views here.
+
+def download_data_as_excel(request):
+    model_queryset = InwModel.objects.all()
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    response['Content-Disposition'] = 'attachment; filename={date}-akcesoria.xlsx'.format(
+        date=datetime.now().strftime('%Y-%m-%d'),
+    )
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.title = 'Akcesoria'
+    columns = [
+        'ID',
+        'Nazwa',
+        'EAN',
+        'Ilość',
+    ]
+    row_num = 1
+    for col_num, column_title in enumerate(columns, 1):
+        cell = worksheet.cell(row=row_num, column=col_num)
+        wsc = worksheet[cell.coordinate]
+        cell.value = column_title
+        column_letter = get_column_letter(col_num)
+        column_dimensions = worksheet.column_dimensions[column_letter]
+        wsc.font = Font(bold=True, size="13")
+        wsc.alignment = Alignment(horizontal='center', vertical='center')
+        worksheet.row_dimensions[1].height = 35
+        if column_title == 'ID' or column_title == 'Ilość':
+            column_dimensions.width = 8
+        elif column_title == 'EAN':
+            column_dimensions.width = 20
+        else:
+            column_dimensions.width = 40
+    for model in model_queryset:
+        row_num += 1
+        row = [
+            row_num - 1,
+            model.Nazwa,
+            model.EAN,
+            model.Ilosc,
+        ]
+        for col_num, cell_value in enumerate(row, 1):
+            cell = worksheet.cell(row=row_num, column=col_num)
+            wsc = worksheet[cell.coordinate]
+            if cell.column_letter == 'A':
+                wsc.alignment = Alignment(horizontal='left')
+            elif cell.column_letter == 'C':
+                wsc.alignment = Alignment(horizontal='center')
+            elif cell.column_letter == 'D':
+                if cell_value > 0:
+                    wsc.font = Font(color="0000FF00")
+                elif cell_value < 0:
+                    wsc.font = Font(color="00FF0000")
+            cell.value = cell_value
+    worksheet.auto_filter.ref = worksheet.dimensions
+    workbook.save(response)
+    return response
 
 def confirm_delete_list(request):
     if request.method == 'GET':

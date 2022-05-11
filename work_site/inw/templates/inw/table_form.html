@@ -2,7 +2,10 @@
 {% load static %}
 
 {% block title %}Table{% endblock %}
-{% block script %}<script src="{% static 'js/checkbox.js' %}"></script>{% endblock %}
+{% block script %}
+<script src="{% static 'js/checkbox.js' %}"></script>
+<script src="{% static 'js/successful_download_redirect.js' %}"></script>
+{% endblock %}
 
 {% block content %}
     <form method="GET">
@@ -16,21 +19,22 @@
                 <label class="form-check-label" for="radio-surplus">Nadwyżki</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="submit" value="Check" class="btn-primary btn-sml">
+                <input type="submit" value="Check" class="btn btn-info">
             </div>
         </div>
-        </form>
-        <form action="{% url 'myapp:list' %}" method="GET">
-            <div class="mb-1">
-                <input class="btn btn-danger" type="submit" value="Delete" >
-            </div>
+    </form>
+    <form action="{% url 'myapp:list' %}" method="GET">
+        <div class="mb-1">
+            <input class="btn btn-danger" type="submit" value="Delete" >
+            <a class="btn btn-primary" id="link-with-redirect" href="{% url 'myapp:download' %}">Download</a>
+        </div>
         <table class="table table-hover">
             <thead class=>
                 <tr>
                     <th>
                         <input class="form-check-input" type="checkbox" onClick="toggle(this)" />  NAZWA<br/>
                     </th>
-                    <th>EAN</th>                    
+                    <th>EAN</th>
                     <th>
                         ILOŚĆ
                         <a class="nav-item" href="{% url 'myapp:sortu' %}">Up</a>
@@ -38,6 +42,7 @@
                     </th>
                 </tr>
             </thead>
+            <tbody>
             {% for value in values %}
                 <tr>
                     <td>
@@ -46,15 +51,13 @@
                     <td>{{ value.EAN }}</td>
                     <td>
                         {{ value.Ilosc }}
-                        <form method="post">
-                            {% csrf_token %}
-                            <ul class="nav">
-                                <li><a class="nav-item" href="/inw/update/{{value.id}}">Edit</a></li>
-                            </ul>
-                        </form>
+                        <ul class="nav">
+                            <li><a class="nav-item" href="/inw/update/{{value.id}}">Edit</a></li>
+                        </ul>
                     </td>
                 </tr>
             {% endfor %}
+            </tbody>
         </table>
-        </form>
+    </form>
 {% endblock %}
