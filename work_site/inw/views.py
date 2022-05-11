@@ -12,11 +12,11 @@ from django.contrib import messages
 
 def confirm_delete_list(request):
     if request.method == 'GET':
-        id_list = request.GET.getlist('delete[]')
+        id_list = request.GET.getlist('delete')
         objects = InwModel.objects.filter(id__in=id_list)
         return render(request, 'inw/inwmodel_delete_list.html', {'objects':objects})
     if request.method == 'POST':
-        id_list = request.GET.getlist('delete[]')
+        id_list = request.GET.getlist('delete')
         objects = InwModel.objects.filter(id__in=id_list).delete()
         return redirect('/inw/table')
 
@@ -58,23 +58,23 @@ class EditData(UpdateView):
 
 class TableData(View):
     def get(self,request):
-        values = InwModel.objects.all()
-        context = {'values': values}
-        return render(request, 'inw/table_form.html', context)
-    def post(self,request):
-        if 'check1' in request.POST or 'check2' in request.POST:
-            if 'check1' in request.POST and 'check2' in request.POST:
-                values = InwModel.objects.all()
-                context = {'values': values}
-                return render(request, 'inw/table_form.html', context)
-            elif 'check1' in request.POST:
+        if 'check1' in request.GET or 'check2' in request.GET:
+            if 'check1' in request.GET:
                 values = InwModel.objects.filter(Ilosc__lt=0)
                 context = {'values': values}
                 return render(request, 'inw/table_form.html', context)
-            elif 'check2' in request.POST:
+            elif 'check2' in request.GET:
                 values = InwModel.objects.filter(Ilosc__gt=0)
                 context = {'values': values}
                 return render(request, 'inw/table_form.html', context)
+            else:
+                values = InwModel.objects.all()
+                context = {'values': values}
+                return render(request, 'inw/table_form.html', context)
+        else:
+            values = InwModel.objects.all()
+            context = {'values': values}
+            return render(request, 'inw/table_form.html', context)
 
 def table_sort_up(request):
     values = InwModel.objects.order_by('-Ilosc')
