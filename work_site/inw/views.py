@@ -20,9 +20,7 @@ def download_data_as_excel(request):
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     )
-    response['Content-Disposition'] = 'attachment; filename={date}-akcesoria.xlsx'.format(
-        date=datetime.now().strftime('%Y-%m-%d'),
-    )
+    response['Content-Disposition'] = f"attachment; filename={datetime.now().strftime('%Y-%m-%d')}-akcesoria.xlsx"
     workbook = Workbook()
     worksheet = workbook.active
     worksheet.title = 'Akcesoria'
