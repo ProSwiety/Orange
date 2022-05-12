@@ -7,13 +7,14 @@ from openpyxl.styles import Font,Alignment
 from datetime import datetime
 from .models import InwModel
 from .forms import UploadFileForm,CreateDataForm
-from django.views.generic import View,UpdateView,CreateView
+from django.views.generic import View,UpdateView,CreateView,TemplateView
 from django.http import HttpResponse
 from django.contrib import messages
 
 
 
 # Create your views here.
+
 
 def download_data_as_excel(request):
     model_queryset = InwModel.objects.all()
