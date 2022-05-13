@@ -13,8 +13,7 @@
         <div class="mb-0">
         {% for form in forms %}
             <div class="form-check form-check-inline form-switch">
-                {{form}}
-                {{form.label}}
+                {{form.label_tag}}{{form}}
             </div>
         {% endfor %}
             <div class="form-check form-check-inline">

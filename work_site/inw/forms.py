@@ -5,10 +5,16 @@ from .models import InwModel
 class UploadFileForm(forms.Form):
     upload_field_sap = forms.FileField(widget=forms.ClearableFileInput(attrs={
         'class':"form-control mb-2 mr-sm-2",
-        }), label='Plik SAP')
+        }),
+        label='Plik SAP',
+        label_suffix = ''
+    )
     upload_field_inw = forms.FileField(widget=forms.ClearableFileInput(attrs={
         'class':"form-control mb-2 mr-sm-2",
-        }), label='Plik INW')
+        }),
+        label='Plik INW',
+        label_suffix=''
+    )
 
 class SurplusLackInputForm(forms.Form):
     lack_check = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput(attrs={
@@ -17,14 +23,19 @@ class SurplusLackInputForm(forms.Form):
         'role':"switch",
         'value':"lack"
     }),
-        label="Braki")
+        label="Braki",
+        label_suffix=''
+    )
+
     surplus_check = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput(attrs={
         'class': "form-check-input",
         'id': "radio-lack",
         'role': "switch",
         'value': "surplus"
     }),
-        label="Nadwyżki")
+        label="Nadwyżki",
+        label_suffix=''
+    )
 
 class EditForm(forms.ModelForm):
     class Meta:
@@ -32,7 +43,6 @@ class EditForm(forms.ModelForm):
         fields = ["Ilosc"]
         widgets = {
             'Ilosc':forms.NumberInput()
-
         }
 
 class CreateDataForm(forms.ModelForm):
