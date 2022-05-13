@@ -8,8 +8,6 @@ urlpatterns = [
     path('upload/',views.UploadData.as_view(), name='upload'),
     path('create/',views.CreateData.as_view(), name='create'),
     path('update/<int:pk>',views.UpdateView.as_view(), name='update'),
-    path('table/sort_up/',views.table_sort_up, name='sortu'),
-    path('table/sort_down/',views.table_sort_down, name='sortd'),
     path('table/delete',views.confirm_delete_list, name='list'),
     path('download/',views.download_data_as_excel, name='download'),
 ]

@@ -11,14 +11,12 @@
 {% block content %}
     <form method="GET">
         <div class="mb-0">
+        {% for form in forms %}
             <div class="form-check form-check-inline form-switch">
-                <input class="form-check-input" id="radio-lack" type="checkbox" role="switch" name="check1" value="lack">
-                <label class="form-check-label" for="radio-lack">Braki</label>
+                {{form}}
+                {{form.label}}
             </div>
-            <div class="form-check form-check-inline form-switch">
-                <input class="form-check-input" id="radio-surplus" type="checkbox" role="switch" name="check2" value="surplus">
-                <label class="form-check-label" for="radio-surplus">Nadwyżki</label>
-            </div>
+        {% endfor %}
             <div class="form-check form-check-inline">
                 <input type="submit" value="Check" class="btn btn-info">
             </div>

@@ -6,7 +6,7 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font,Alignment
 from datetime import datetime
 from .models import InwModel
-from .forms import UploadFileForm,CreateDataForm
+from .forms import UploadFileForm,CreateDataForm,SurplusLackInputForm
 from django.views.generic import View,UpdateView,CreateView,TemplateView
 from django.http import HttpResponse
 from django.contrib import messages
@@ -120,37 +120,27 @@ class EditData(UpdateView):
 
 class TableData(View):
     def get(self,request):
-        if 'check1' in request.GET or 'check2' in request.GET:
-            if 'check1' in request.GET:
-                values = InwModel.objects.filter(Ilosc__lt=0)
-                context = {'values': values}
-                return render(request, 'inw/table_form.html', context)
-            elif 'check2' in request.GET:
-                values = InwModel.objects.filter(Ilosc__gt=0)
-                context = {'values': values}
-                return render(request, 'inw/table_form.html', context)
-            else:
+        forms = SurplusLackInputForm()
+        if forms.is_valid:
+            if 'lack_check' in request.GET and 'surplus_check' in request.GET:
                 values = InwModel.objects.all()
-                context = {'values': values}
+                context = {'values': values, 'forms': forms}
                 return render(request, 'inw/table_form.html', context)
-        else:
-            values = InwModel.objects.all()
-            context = {'values': values}
-            return render(request, 'inw/table_form.html', context)
+            elif 'lack_check' in request.GET:
+                forms.fields['surplus_check'].initial = False
+                values = InwModel.objects.filter(Ilosc__lt=0)
+                context = {'values': values, 'forms': forms}
+                return render(request, 'inw/table_form.html', context)
+            elif 'surplus_check' in request.GET:
+                forms.fields['lack_check'].initial = False
+                values = InwModel.objects.filter(Ilosc__gt=0)
+                context = {'values': values, 'forms': forms}
+                return render(request, 'inw/table_form.html', context)
 
-def table_sort_up(request):
-    values = InwModel.objects.order_by('-Ilosc')
-    context = {'values': values}
-    return render(request, 'inw/table_form.html', context)
+        values = InwModel.objects.all()
+        context = {'values': values, 'forms': forms}
+        return render(request, 'inw/table_form.html', context)
 
-def table_sort_down(request):
-    values = InwModel.objects.order_by('Ilosc')
-    context = {'values': values}
-    return render(request, 'inw/table_form.html', context)
-
-
-
-#form dont load well change crispy to model form
 class CreateData(CreateView):
     form = CreateDataForm
     model = InwModel

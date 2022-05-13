@@ -10,6 +10,22 @@ class UploadFileForm(forms.Form):
         'class':"form-control mb-2 mr-sm-2",
         }), label='Plik INW')
 
+class SurplusLackInputForm(forms.Form):
+    lack_check = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput(attrs={
+        'class':"form-check-input",
+        'id':"radio-lack",
+        'role':"switch",
+        'value':"lack"
+    }),
+        label="Braki")
+    surplus_check = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput(attrs={
+        'class': "form-check-input",
+        'id': "radio-lack",
+        'role': "switch",
+        'value': "surplus"
+    }),
+        label="Nadwyżki")
+
 class EditForm(forms.ModelForm):
     class Meta:
         model = InwModel
