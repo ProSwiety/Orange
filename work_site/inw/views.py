@@ -10,6 +10,7 @@ from .forms import UploadFileForm,CreateDataForm,SurplusLackInputForm
 from django.views.generic import View,UpdateView,CreateView,TemplateView
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 
@@ -79,7 +80,8 @@ def confirm_delete_list(request):
         return render(request, 'inw/inwmodel_delete_list.html', {'objects':objects})
     if request.method == 'POST':
         id_list = request.GET.getlist('delete')
-        objects = InwModel.objects.filter(id__in=id_list).delete()
+        InwModel.objects.filter(id__in=id_list).delete()
+        messages.add_message(request, messages.SUCCESS, 'Delete')
         return redirect('/inw/table')
 
 class UploadData(View):
@@ -111,12 +113,6 @@ class UploadData(View):
                     model.save()
         return redirect('/inw/table')
 
-class EditData(UpdateView):
-    UpdateView.model = InwModel
-    UpdateView.fields = ['Ilosc']
-    UpdateView.template_name_suffix = '_update_form'
-    UpdateView.success_url = reverse_lazy('myapp:table')
-
 
 class TableData(View):
     def get(self,request):
@@ -141,12 +137,22 @@ class TableData(View):
         context = {'values': values, 'forms': forms}
         return render(request, 'inw/table_form.html', context)
 
-class CreateData(CreateView):
+class InwModelCreateView(SuccessMessageMixin,CreateView):
     form = CreateDataForm
     model = InwModel
     fields =["Nazwa", "EAN", "Ilosc"]
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('myapp:table')
+    success_message = "%(Nazwa)s was created succesfully"
+
+class InwModelUpdateView(SuccessMessageMixin,UpdateView):
+    model = InwModel
+    fields = ['Nazwa', 'Ilosc']
+    template_name_suffix = '_update_form'
+    success_url = reverse_lazy('myapp:table')
+    success_message = f"%(Nazwa)s was editing succesfully"
+
+    
 
 
 
