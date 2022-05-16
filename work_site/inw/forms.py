@@ -61,10 +61,6 @@ class CreateDataForm(forms.ModelForm):
             'quantity': ("Ilość")
         }
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user')
-        super(CreateDataForm, self).__init__(*args, **kwargs)
-        self.fields['upload'].queryset = InwModel.objects.filter(upload__user=user)
 
 class UploadModelFormSelect(forms.ModelForm):
     class Meta:
@@ -78,6 +74,11 @@ class UploadModelFormSelect(forms.ModelForm):
         labels = {
             'upload': ''
         }
+
+    def __init__(self, user=None, **kwargs):
+        super(UploadModelFormSelect, self).__init__(**kwargs)
+        if user:
+            self.fields['upload'].queryset = UploadModel.objects.filter(user=user)
 
 
 

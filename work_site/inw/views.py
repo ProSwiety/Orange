@@ -20,65 +20,66 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required(login_url="/login")
 def download_data_as_excel(request):
-    user_query = UploadModel.objects.filter(user=request.user)
-    model_queryset = InwModel.objects.filter(upload=user_query)
-    response = HttpResponse(
-        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    )
-    response['Content-Disposition'] = f"attachment; filename={datetime.now().strftime('%Y-%m-%d')}-akcesoria.xlsx"
-    workbook = Workbook()
-    worksheet = workbook.active
-    worksheet.title = 'Akcesoria'
-    columns = [
-        'ID',
-        'Nazwa',
-        'EAN',
-        'Ilość',
-    ]
-    row_num = 1
-    for col_num, column_title in enumerate(columns, 1):
-        cell = worksheet.cell(row=row_num, column=col_num)
-        wsc = worksheet[cell.coordinate]
-        cell.value = column_title
-        column_letter = get_column_letter(col_num)
-        column_dimensions = worksheet.column_dimensions[column_letter]
-        wsc.font = Font(bold=True, size="13")
-        wsc.alignment = Alignment(horizontal='center', vertical='center')
-        worksheet.row_dimensions[1].height = 35
-        if column_title == 'ID' or column_title == 'Ilość':
-            column_dimensions.width = 8
-        elif column_title == 'EAN':
-            column_dimensions.width = 20
-        else:
-            column_dimensions.width = 40
-    for model in model_queryset:
-        row_num += 1
-        row = [
-            row_num - 1,
-            model.Nazwa,
-            model.EAN,
-            model.Ilosc,
+    if request.method == 'POST':
+        user_query = UploadModel.objects.filter(user=request.user)
+        model_queryset = InwModel.objects.filter(upload='Inwentaryzacja1 2022-05-16 TL858')
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        )
+        response['Content-Disposition'] = f"attachment; filename={datetime.now().strftime('%Y-%m-%d')}-akcesoria.xlsx"
+        workbook = Workbook()
+        worksheet = workbook.active
+        worksheet.title = 'Akcesoria'
+        columns = [
+            'ID',
+            'Nazwa',
+            'EAN',
+            'Ilość',
         ]
-        for col_num, cell_value in enumerate(row, 1):
+        row_num = 1
+        for col_num, column_title in enumerate(columns, 1):
             cell = worksheet.cell(row=row_num, column=col_num)
             wsc = worksheet[cell.coordinate]
-            if cell.column_letter == 'A':
-                wsc.alignment = Alignment(horizontal='left')
-            elif cell.column_letter == 'C':
-                wsc.alignment = Alignment(horizontal='center')
-            elif cell.column_letter == 'D':
-                if cell_value > 0:
-                    wsc.font = Font(color="0000FF00")
-                elif cell_value < 0:
-                    wsc.font = Font(color="00FF0000")
-            cell.value = cell_value
-    worksheet.auto_filter.ref = worksheet.dimensions
-    workbook.save(response)
-    return response
+            cell.value = column_title
+            column_letter = get_column_letter(col_num)
+            column_dimensions = worksheet.column_dimensions[column_letter]
+            wsc.font = Font(bold=True, size="13")
+            wsc.alignment = Alignment(horizontal='center', vertical='center')
+            worksheet.row_dimensions[1].height = 35
+            if column_title == 'ID' or column_title == 'Ilość':
+                column_dimensions.width = 8
+            elif column_title == 'EAN':
+                column_dimensions.width = 20
+            else:
+                column_dimensions.width = 40
+        for model in model_queryset:
+            row_num += 1
+            row = [
+                row_num - 1,
+                model.Nazwa,
+                model.EAN,
+                model.Ilosc,
+            ]
+            for col_num, cell_value in enumerate(row, 1):
+                cell = worksheet.cell(row=row_num, column=col_num)
+                wsc = worksheet[cell.coordinate]
+                if cell.column_letter == 'A':
+                    wsc.alignment = Alignment(horizontal='left')
+                elif cell.column_letter == 'C':
+                    wsc.alignment = Alignment(horizontal='center')
+                elif cell.column_letter == 'D':
+                    if cell_value > 0:
+                        wsc.font = Font(color="0000FF00")
+                    elif cell_value < 0:
+                        wsc.font = Font(color="00FF0000")
+                cell.value = cell_value
+        worksheet.auto_filter.ref = worksheet.dimensions
+        workbook.save(response)
+        return response
 
 @login_required(login_url="/login")
 def confirm_delete_list(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         id_list = request.GET.getlist('delete')
         if len(id_list) == 0:
             messages.add_message(request, messages.ERROR, 'You must select the item to be deleted')
@@ -140,41 +141,40 @@ class UploadData(LoginRequiredMixin,View):
 class TableData(LoginRequiredMixin,View):
     login_url = '/login/'
     def get(self,request):
-            forms = SurplusLackInputForm()
-            upload_form = UploadModelFormSelect()
-            upload_form.instance.upload.user = request.user
-            uploads = UploadModel.objects.filter(user=request.user)
-            if upload_form.is_valid:
-                if forms.is_valid:
-                    try:
-                        upload_model_id = UploadModel.objects.get(id=request.GET['upload'])
-                        values = InwModel.objects.filter(upload=upload_model_id)
-                        intaial_data = {
-                            'upload': upload_model_id,
-                        }
-                        upload_form = UploadModelFormSelect(initial=intaial_data)
-                        if 'lack_check' in request.GET and 'surplus_check' in request.GET:
-                            context = {'values': values, 'forms': forms, 'uploads':uploads, 'upload_form':upload_form}
-                            return render(request, 'inw/table_form.html', context)
-                        elif 'lack_check' in request.GET:
-                            forms.fields['surplus_check'].initial = False
-                            values = values.filter(quantity__lt=0)
-                            context = {'values': values, 'forms': forms, 'uploads':uploads, 'upload_form':upload_form}
-                            return render(request, 'inw/table_form.html', context)
-                        elif 'surplus_check' in request.GET:
-                            forms.fields['lack_check'].initial = False
-                            values = values.filter(quantity__gt=0)
-                            context = {'values': values, 'forms': forms, 'uploads':uploads, 'upload_form':upload_form}
-                            return render(request, 'inw/table_form.html', context)
-                    except:
-                        default_upload = uploads.latest('name')
-                        values = InwModel.objects.filter(upload=default_upload)
-                        intaial_data = {
-                            'upload': default_upload,
-                        }
-                        upload_form = UploadModelFormSelect(initial=intaial_data)
-                        context = {'values': values, 'forms': forms, 'uploads':uploads, 'upload_form':upload_form}
-                        return render(request, 'inw/table_form.html', context)
+            checkboxesform = SurplusLackInputForm()
+            selectform = UploadModelFormSelect(user=request.user)
+            ProductModel = InwModel
+            productContainerModel = UploadModel
+            context = {
+                'checkboxesform': checkboxesform,
+                'selectform': selectform
+            }
+            intaial_data = {
+
+            }
+            try:
+                if checkboxesform.is_valid and selectform.is_valid:
+                    productcontainer = productContainerModel.objects.get(id=request.GET['upload'])
+                    intaial_data['upload'] = productcontainer
+                    context['selectform'] = UploadModelFormSelect(initial=intaial_data, user=request.user)
+                    if 'lack_check' in request.GET and 'surplus_check' in request.GET:
+                        products = ProductModel.objects.filter(upload=productcontainer)
+                        context["products"] = products
+                        return render(request,'inw/table_form.html',context=context)
+                    elif 'surplus_check' in request.GET:
+                        checkboxesform.fields['lack_check'].initial = False
+                        products = ProductModel.objects.filter(upload=productcontainer)
+                        products = products.filter(quantity__gt=0)
+                        context["products"] = products
+                        return render(request,'inw/table_form.html',context=context)
+                    elif 'lack_check' in request.GET:
+                        checkboxesform.fields['surplus_check'].initial = False
+                        products = ProductModel.objects.filter(upload=productcontainer)
+                        products = products.filter(quantity__lt=0)
+                        context["products"] = products
+                        return render(request,'inw/table_form.html',context=context)
+            except:
+                return render(request, 'inw/table_form.html', context=context)
 
 
 
@@ -187,11 +187,10 @@ class InwModelCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     success_message = "%(name)s was created succesfully"
     login_url = '/login/'
 
-    def get_form_kwargs(self):
-        kwargs = super(InwModelCreateView, self).get_form_kwargs()
-        kwargs['upload'] = self.request.user
-        return kwargs
-
+    def get_form(self, *args, **kwargs):
+        form = super(InwModelCreateView, self).get_form(*args, **kwargs)
+        form.fields['upload'].queryset = UploadModel.objects.filter(user=self.request.user)
+        return form
 
 
 class InwModelUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):

@@ -10,16 +10,15 @@
 
 
 {% block content %}
-    User {{ user.id }}
     <form method="GET">
         <div class="mb-0">
-        {% for form in forms %}
+        {% for checkform in checkboxesform %}
             <div class="form-check form-check-inline form-switch">
-                {{form.label_tag}}{{form}}
+                {{checkform.label_tag}}{{checkform}}
             </div>
         {% endfor %}
             <div class="form-check form-check-inline">
-                {{ upload_form }}
+                {{ selectform }}
             </div>
             <div class="form-check form-check-inline">
                 <input type="submit" value="Check" class="btn btn-info">
@@ -28,8 +27,13 @@
     </form>
     <form action="{% url 'myapp:list' %}" method="GET">
         <div class="mb-1">
-            <input class="btn btn-danger" type="submit" value="Delete" >
-            <a class="btn btn-primary" id="link-with-redirect" href="{% url 'myapp:download' %}">Download</a>
+            {% if product.name == None %}
+                <input class="btn btn-danger" type="submit" value="Delete" disabled>
+                <a class="btn btn-primary disabled" id="link-with-redirect" href="{% url 'myapp:download' %}">Download</a>
+            {% else %}
+                <input class="btn btn-danger" type="submit" value="Delete" >
+                <a class="btn btn-primary" id="link-with-redirect" href="{% url 'myapp:download' %}">Download</a>
+            {% endif %}
         </div>
 
         <table class="table table-hover js-sort-table" id="sortable">
@@ -44,14 +48,14 @@
                 </tr>
             </thead>
             <tbody>
-            {% for value in values %}
+            {% for product in products %}
                 <tr>
                     <td>
-                        <input class="form-check-input" type="checkbox" name="delete" value="{{value.id}}">  {{ value.name }}
+                        <input class="form-check-input" type="checkbox" name="delete" value="{{product.id}}">  {{ product.name }}
                     </td>
-                    <td>{{ value.EAN }}</td>
+                    <td>{{ product.EAN }}</td>
                     <td>
-                        {{ value.quantity }}
+                        {{ product.quantity }}
                         <ul class="nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="/inw/update/{{value.id}}">Edit</a>
