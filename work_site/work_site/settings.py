@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.1' ]
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_bootstrap5',
     'crispy_forms',
     'inw.apps.InwConfig',
     'django.contrib.admin',
@@ -42,6 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = 'login'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 MIDDLEWARE = [

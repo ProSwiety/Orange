@@ -1,5 +1,6 @@
 from django import forms
-from .models import InwModel
+from .models import InwModel,UploadModel
+
 
 
 class UploadFileForm(forms.Form):
@@ -7,14 +8,15 @@ class UploadFileForm(forms.Form):
         'class':"form-control mb-2 mr-sm-2",
         }),
         label='Plik SAP',
-        label_suffix = ''
+        label_suffix = '',
     )
     upload_field_inw = forms.FileField(widget=forms.ClearableFileInput(attrs={
         'class':"form-control mb-2 mr-sm-2",
         }),
         label='Plik INW',
-        label_suffix=''
+        label_suffix='',
     )
+
 
 class SurplusLackInputForm(forms.Form):
     lack_check = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput(attrs={
@@ -40,23 +42,47 @@ class SurplusLackInputForm(forms.Form):
 class EditForm(forms.ModelForm):
     class Meta:
         model = InwModel
-        fields = ["Ilosc"]
+        fields = ["quantity"]
         widgets = {
-            'Ilosc':forms.NumberInput()
+            'quantity':forms.NumberInput()
         }
 
 class CreateDataForm(forms.ModelForm):
     class Meta:
         model = InwModel
-        fields = ["Nazwa", "EAN", "Ilosc"]
+        fields = ["name", "EAN", "quantity", "upload"]
         widgets = {
-            'Nazwa': forms.TextInput(attrs={'class':"form-control", 'placeholder':"Etui"}),
+            'name': forms.TextInput(attrs={'class':"form-control", 'placeholder':"Etui"}),
             'EAN': forms.NumberInput(attrs={'class':"form-control"}),
-            'Ilosc': forms.NumberInput(attrs={'class':"form-control"})
+            'quantity': forms.NumberInput(attrs={'class':"form-control"}),
+            'upload': forms.SelectMultiple(attrs={"class":"form-control"})
         }
         labels = {
-            'Ilosc': ("Ilość")
+            'quantity': ("Ilość")
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super(CreateDataForm, self).__init__(*args, **kwargs)
+        self.fields['upload'].queryset = InwModel.objects.filter(upload__user=user)
+
+class UploadModelFormSelect(forms.ModelForm):
+    class Meta:
+        model = InwModel
+        fields = ['upload']
+        widgets = {
+        'upload': forms.Select(attrs={
+            "class": "form-select",
+            'aria-label': "Default select example"})
+        }
+        labels = {
+            'upload': ''
+        }
+
+
+
+
+
 
 
 

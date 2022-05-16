@@ -1,15 +1,17 @@
 from django.urls import path
-from . import views
+from .views import TableData, UploadData, InwModelCreateView, InwModelUpdateView, confirm_delete_list, download_data_as_excel
+from django.contrib.auth import views as auth_views
 
 app_name = 'myapp'
 
 urlpatterns = [
-    path('table/',views.TableData.as_view(), name='table'),
-    path('upload/',views.UploadData.as_view(), name='upload'),
-    path('create/',views.InwModelCreateView.as_view(), name='create'),
-    path('update/<int:pk>',views.InwModelUpdateView.as_view(), name='update'),
-    path('table/delete',views.confirm_delete_list, name='list'),
-    path('download/',views.download_data_as_excel, name='download'),
+    path('table/',TableData.as_view(), name='table'),
+    path('upload/',UploadData.as_view(), name='upload'),
+    path('create/',InwModelCreateView.as_view(), name='create'),
+    path('update/<int:pk>',InwModelUpdateView.as_view(), name='update'),
+    path('table/delete',confirm_delete_list, name='list'),
+    path('download/',download_data_as_excel, name='download'),
+
 ]
 
 handler404 = "work_site.views.page_not_found_view"

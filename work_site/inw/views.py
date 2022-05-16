@@ -1,24 +1,27 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import reverse_lazy
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font,Alignment
 from datetime import datetime
-from .models import InwModel
-from .forms import UploadFileForm,CreateDataForm,SurplusLackInputForm
-from django.views.generic import View,UpdateView,CreateView,TemplateView
+from .models import InwModel,UploadModel
+from .forms import UploadFileForm,CreateDataForm,SurplusLackInputForm,UploadModelFormSelect
+from django.views.generic import View,UpdateView,CreateView
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
 # Create your views here.
 
-
+@login_required(login_url="/login")
 def download_data_as_excel(request):
-    model_queryset = InwModel.objects.all()
+    user_query = UploadModel.objects.filter(user=request.user)
+    model_queryset = InwModel.objects.filter(upload=user_query)
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     )
@@ -73,84 +76,132 @@ def download_data_as_excel(request):
     workbook.save(response)
     return response
 
+@login_required(login_url="/login")
 def confirm_delete_list(request):
     if request.method == 'GET':
         id_list = request.GET.getlist('delete')
-        objects = InwModel.objects.filter(id__in=id_list)
-        return render(request, 'inw/inwmodel_delete_list.html', {'objects':objects})
+        if len(id_list) == 0:
+            messages.add_message(request, messages.ERROR, 'You must select the item to be deleted')
+            return redirect('/inw/table')
+        else:
+            objects = InwModel.objects.filter(id__in=id_list)
+            return render(request, 'inw/inwmodel_delete_list.html', {'objects':objects})
     if request.method == 'POST':
         id_list = request.GET.getlist('delete')
         InwModel.objects.filter(id__in=id_list).delete()
         messages.add_message(request, messages.SUCCESS, 'Delete')
         return redirect('/inw/table')
 
-class UploadData(View):
+
+class UploadData(LoginRequiredMixin,View):
+    login_url = '/login/'
     def get(self,request):
         form = UploadFileForm
         return render(request, 'inw/upload_form_page.html', {'form':form})
     def post(self, request, *args, **kwargs):
         from .upload_scripts.upload_scripts import excel_inf_to_list, excel_sap_to_dict, process_excel_files
+        from .upload_scripts.user_query_check_NaN import check_NaN
         form = UploadFileForm(request.POST,request.FILES)
         if form.is_valid():
-            df_sap = pd.read_excel(request.FILES['upload_field_sap'])
-            df_inw = pd.read_excel(request.FILES['upload_field_inw'])
-            inw_list = excel_inf_to_list(df_inw)
-            sap_dict = excel_sap_to_dict(df_sap)
-            new_data = process_excel_files(inw_list,sap_dict)
-            sql_data = {
-                'Nazwa': '',
-                'EAN': '',
-                'Ilosc': ''
-            }
-            index = -1
-            for value in new_data['Zapas ogółem']:
-                index += 1
-                if value != 0:
-                    sql_data['Ilosc'] = new_data['Zapas ogółem'][index]
-                    sql_data['EAN'] = new_data['EAN'][index]
-                    sql_data['Nazwa'] = new_data['Krótki tekst materiału'][index]
-                    model = InwModel(**sql_data)
-                    model.save()
-        return redirect('/inw/table')
+            try:
+                user = request.user
+                df_sap = pd.read_excel(request.FILES['upload_field_sap'])
+                df_inw = pd.read_excel(request.FILES['upload_field_inw'])
+                inw_list = excel_inf_to_list(df_inw)
+                sap_dict = excel_sap_to_dict(df_sap)
+                new_data = process_excel_files(inw_list,sap_dict)
+                user_query = UploadModel.objects.filter(user=user)
+                name = check_NaN(user_query)
+                upload_file = UploadModel(name=name, user=user)
+                upload_file.save()
+                sql_data = {
+                    'name': '',
+                    'EAN': '',
+                    'quantity': '',
+                    'upload': upload_file
+                }
+                index = -1
+                for value in new_data['Zapas ogółem']:
+                    index += 1
+                    if value != 0:
+                        sql_data['quantity'] = new_data['Zapas ogółem'][index]
+                        sql_data['EAN'] = new_data['EAN'][index]
+                        sql_data['name'] = new_data['Krótki tekst materiału'][index]
+                        model = InwModel(**sql_data)
+                        model.save()
+                return redirect('/inw/table')
+            except:
+                messages.add_message(request, messages.ERROR, 'Coś poszło nie tak')
+                return render(request, 'inw/upload_form_page.html', {'form':form})
 
 
-class TableData(View):
+
+
+class TableData(LoginRequiredMixin,View):
+    login_url = '/login/'
     def get(self,request):
-        forms = SurplusLackInputForm()
-        if forms.is_valid:
-            if 'lack_check' in request.GET and 'surplus_check' in request.GET:
-                values = InwModel.objects.all()
-                context = {'values': values, 'forms': forms}
-                return render(request, 'inw/table_form.html', context)
-            elif 'lack_check' in request.GET:
-                forms.fields['surplus_check'].initial = False
-                values = InwModel.objects.filter(Ilosc__lt=0)
-                context = {'values': values, 'forms': forms}
-                return render(request, 'inw/table_form.html', context)
-            elif 'surplus_check' in request.GET:
-                forms.fields['lack_check'].initial = False
-                values = InwModel.objects.filter(Ilosc__gt=0)
-                context = {'values': values, 'forms': forms}
-                return render(request, 'inw/table_form.html', context)
+            forms = SurplusLackInputForm()
+            upload_form = UploadModelFormSelect()
+            upload_form.instance.upload.user = request.user
+            uploads = UploadModel.objects.filter(user=request.user)
+            if upload_form.is_valid:
+                if forms.is_valid:
+                    try:
+                        upload_model_id = UploadModel.objects.get(id=request.GET['upload'])
+                        values = InwModel.objects.filter(upload=upload_model_id)
+                        intaial_data = {
+                            'upload': upload_model_id,
+                        }
+                        upload_form = UploadModelFormSelect(initial=intaial_data)
+                        if 'lack_check' in request.GET and 'surplus_check' in request.GET:
+                            context = {'values': values, 'forms': forms, 'uploads':uploads, 'upload_form':upload_form}
+                            return render(request, 'inw/table_form.html', context)
+                        elif 'lack_check' in request.GET:
+                            forms.fields['surplus_check'].initial = False
+                            values = values.filter(quantity__lt=0)
+                            context = {'values': values, 'forms': forms, 'uploads':uploads, 'upload_form':upload_form}
+                            return render(request, 'inw/table_form.html', context)
+                        elif 'surplus_check' in request.GET:
+                            forms.fields['lack_check'].initial = False
+                            values = values.filter(quantity__gt=0)
+                            context = {'values': values, 'forms': forms, 'uploads':uploads, 'upload_form':upload_form}
+                            return render(request, 'inw/table_form.html', context)
+                    except:
+                        default_upload = uploads.latest('name')
+                        values = InwModel.objects.filter(upload=default_upload)
+                        intaial_data = {
+                            'upload': default_upload,
+                        }
+                        upload_form = UploadModelFormSelect(initial=intaial_data)
+                        context = {'values': values, 'forms': forms, 'uploads':uploads, 'upload_form':upload_form}
+                        return render(request, 'inw/table_form.html', context)
 
-        values = InwModel.objects.all()
-        context = {'values': values, 'forms': forms}
-        return render(request, 'inw/table_form.html', context)
 
-class InwModelCreateView(SuccessMessageMixin,CreateView):
+
+class InwModelCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     form = CreateDataForm
     model = InwModel
-    fields =["Nazwa", "EAN", "Ilosc"]
+    fields =["name", "EAN", "quantity", 'upload']
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('myapp:table')
-    success_message = "%(Nazwa)s was created succesfully"
+    success_message = "%(name)s was created succesfully"
+    login_url = '/login/'
 
-class InwModelUpdateView(SuccessMessageMixin,UpdateView):
+    def get_form_kwargs(self):
+        kwargs = super(InwModelCreateView, self).get_form_kwargs()
+        kwargs['upload'] = self.request.user
+        return kwargs
+
+
+
+class InwModelUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
     model = InwModel
-    fields = ['Nazwa', 'Ilosc']
+    fields = ['name', 'quantity']
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('myapp:table')
-    success_message = f"%(Nazwa)s was editing succesfully"
+    success_message = f"%(name)s was editing succesfully"
+    login_url = '/login/'
+
 
     
 

@@ -20,5 +20,10 @@ body {
  border-radius: 1.2em;
 }
 
-
+.login {
+  position: relative;
+  float: right;
+  margin-left: 45em;
+  margin-right: 0;
+}
 
