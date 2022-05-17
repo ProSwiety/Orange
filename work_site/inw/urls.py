@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TableData, UploadData, InwModelCreateView, InwModelUpdateView, confirm_delete_list, download_data_as_excel
+from .views import TableData, UploadData, InwModelCreateView, InwModelUpdateView, ConfirmDeleteList, download_data_as_excel
 from django.contrib.auth import views as auth_views
 
 app_name = 'myapp'
@@ -9,7 +9,7 @@ urlpatterns = [
     path('upload/',UploadData.as_view(), name='upload'),
     path('create/',InwModelCreateView.as_view(), name='create'),
     path('update/<int:pk>',InwModelUpdateView.as_view(), name='update'),
-    path('table/delete',confirm_delete_list, name='list'),
+    path('table/delete',ConfirmDeleteList.as_view(), name='list'),
     path('download/',download_data_as_excel, name='download'),
 
 ]

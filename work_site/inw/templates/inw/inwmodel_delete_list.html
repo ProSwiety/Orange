@@ -6,13 +6,14 @@
 <h1>Czy chcesz usunąć ?</h1>
 <form method="POST">
     {% csrf_token %}
-    <ul>
+    <ul class="list-group">
         {% for object in objects %}
-            <li>
-                {{object.name}}
-                {{object.EAN}}
-                {{object.quantity}}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Produkt: {{ object.name }}
+                EAN: {{ object.EAN }}
+                <span class="badge badge-primary badge-pill">{{ object.quantity }}</span>
             </li>
+
         {% endfor %}
     </ul>
     <button type="submit" class="btn btn-danger" name="confirm">Confirm Delete</button>

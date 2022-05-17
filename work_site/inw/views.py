@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,reverse
 from django.urls import reverse_lazy
 import pandas as pd
 from openpyxl import Workbook
@@ -17,6 +17,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
+
+class RedirectToPreviousMixin:
+    default_redirect = '/'
+    def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return self.request.session['previous_page']
+
+
+
 
 @login_required(login_url="/login")
 def download_data_as_excel(request):
@@ -77,21 +89,26 @@ def download_data_as_excel(request):
         workbook.save(response)
         return response
 
-@login_required(login_url="/login")
-def confirm_delete_list(request):
-    if request.method == 'POST':
+
+class ConfirmDeleteList(LoginRequiredMixin,View):
+    login_url = '/login/'
+    def get(self, request, *args, **kwargs):
         id_list = request.GET.getlist('delete')
+        product = InwModel
         if len(id_list) == 0:
-            messages.add_message(request, messages.ERROR, 'You must select the item to be deleted')
-            return redirect('/inw/table')
+            messages.add_message(request, messages.ERROR, 'Musisz wybrać pozycję żeby usunąć!')
+            return redirect(reverse('myapp:table'))
         else:
-            objects = InwModel.objects.filter(id__in=id_list)
-            return render(request, 'inw/inwmodel_delete_list.html', {'objects':objects})
-    if request.method == 'POST':
+            objects = product.objects.filter(id__in=id_list)
+            return render(request, 'inw/inwmodel_delete_list.html', {'objects': objects})
+
+    def post(self,request):
         id_list = request.GET.getlist('delete')
-        InwModel.objects.filter(id__in=id_list).delete()
+        product = InwModel
+        product.objects.filter(id__in=id_list).delete()
         messages.add_message(request, messages.SUCCESS, 'Delete')
         return redirect('/inw/table')
+
 
 
 class UploadData(LoginRequiredMixin,View):
@@ -140,7 +157,8 @@ class UploadData(LoginRequiredMixin,View):
 
 class TableData(LoginRequiredMixin,View):
     login_url = '/login/'
-    def get(self,request):
+    def get(self,request,**kwargs):
+            id_select_form = request.GET.get('button')
             checkboxesform = SurplusLackInputForm()
             selectform = UploadModelFormSelect(user=request.user)
             ProductModel = InwModel
@@ -152,6 +170,7 @@ class TableData(LoginRequiredMixin,View):
             intaial_data = {
 
             }
+
             try:
                 if checkboxesform.is_valid and selectform.is_valid:
                     productcontainer = productContainerModel.objects.get(id=request.GET['upload'])
@@ -178,7 +197,7 @@ class TableData(LoginRequiredMixin,View):
 
 
 
-class InwModelCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+class InwModelCreateView(RedirectToPreviousMixin,LoginRequiredMixin,SuccessMessageMixin,CreateView):
     form = CreateDataForm
     model = InwModel
     fields =["name", "EAN", "quantity", 'upload']
@@ -193,13 +212,15 @@ class InwModelCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
         return form
 
 
-class InwModelUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+class InwModelUpdateView(RedirectToPreviousMixin,LoginRequiredMixin,SuccessMessageMixin,UpdateView):
     model = InwModel
     fields = ['name', 'quantity']
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('myapp:table')
     success_message = f"%(name)s was editing succesfully"
     login_url = '/login/'
+
+
 
 
     

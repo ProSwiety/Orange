@@ -27,11 +27,11 @@
     </form>
     <form action="{% url 'myapp:list' %}" method="GET">
         <div class="mb-1">
-            {% if product.name == None %}
-                <input class="btn btn-danger" type="submit" value="Delete" disabled>
+            {% if selectform.upload.value == None %}
+                <button class="btn btn-danger" type="submit" value="delete" disabled>Delete</button>
                 <a class="btn btn-primary disabled" id="link-with-redirect" href="{% url 'myapp:download' %}">Download</a>
             {% else %}
-                <input class="btn btn-danger" type="submit" value="Delete" >
+                <button class="btn btn-danger" type="submit" value="delete">Delete</button>
                 <a class="btn btn-primary" id="link-with-redirect" href="{% url 'myapp:download' %}">Download</a>
             {% endif %}
         </div>
@@ -58,7 +58,7 @@
                         {{ product.quantity }}
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="/inw/update/{{value.id}}">Edit</a>
+                                <a class="nav-link" href="/inw/update/{{product.id}}">Edit</a>
                             </li>
                         </ul>
                     </td>
