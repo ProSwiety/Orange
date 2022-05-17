@@ -18,6 +18,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
+
+# REDIRECT PREVIOUS PAGE METHOD FOR GENERIC CLASS VIEW
+
 class RedirectToPreviousMixin:
     default_redirect = '/'
     def get(self, request, *args, **kwargs):
@@ -93,11 +96,12 @@ def download_data_as_excel(request):
 class ConfirmDeleteList(LoginRequiredMixin,View):
     login_url = '/login/'
     def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', '/')
         id_list = request.GET.getlist('delete')
         product = InwModel
         if len(id_list) == 0:
             messages.add_message(request, messages.ERROR, 'Musisz wybrać pozycję żeby usunąć!')
-            return redirect(reverse('myapp:table'))
+            return redirect(request.session['previous_page'])
         else:
             objects = product.objects.filter(id__in=id_list)
             return render(request, 'inw/inwmodel_delete_list.html', {'objects': objects})
@@ -107,7 +111,7 @@ class ConfirmDeleteList(LoginRequiredMixin,View):
         product = InwModel
         product.objects.filter(id__in=id_list).delete()
         messages.add_message(request, messages.SUCCESS, 'Delete')
-        return redirect('/inw/table')
+        return redirect(request.session['previous_page'])
 
 
 
