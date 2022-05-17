@@ -34,10 +34,9 @@ class RedirectToPreviousMixin:
 
 
 @login_required(login_url="/login")
-def download_data_as_excel(request):
-    if request.method == 'POST':
-        user_query = UploadModel.objects.filter(user=request.user)
-        model_queryset = InwModel.objects.filter(upload='Inwentaryzacja1 2022-05-16 TL858')
+def download_data_as_excel(request, pk):
+    if request.method == 'GET':
+        model_queryset = InwModel.objects.filter(upload=pk)
         response = HttpResponse(
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         )
@@ -71,9 +70,9 @@ def download_data_as_excel(request):
             row_num += 1
             row = [
                 row_num - 1,
-                model.Nazwa,
+                model.name,
                 model.EAN,
-                model.Ilosc,
+                model.quantity,
             ]
             for col_num, cell_value in enumerate(row, 1):
                 cell = worksheet.cell(row=row_num, column=col_num)

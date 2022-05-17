@@ -11,6 +11,7 @@ urlpatterns = [
     path('update/<int:pk>',InwModelUpdateView.as_view(), name='update'),
     path('table/delete',ConfirmDeleteList.as_view(), name='list'),
     path('download/',download_data_as_excel, name='download'),
+    path('download/<int:pk>',download_data_as_excel, name='download'),
 
 ]
 

@@ -10,7 +10,7 @@
     {{form|crispy}}
     <div class="mb-0">
         <input class="btn btn-primary" type="submit" value="Zapisz">
-        <a class="btn btn-danger" href="{% url 'myapp:table' %}?next={{ request.path|urlencode }}">Wróć</a>
+        <a class="btn btn-danger" href="{% url 'myapp:table' %}">Wróć</a>
     </div>
 </form>
 {% endblock %}

@@ -29,10 +29,10 @@
         <div class="mb-1">
             {% if selectform.upload.value == None %}
                 <button class="btn btn-danger" type="submit" value="delete" disabled>Delete</button>
-                <a class="btn btn-primary disabled" id="link-with-redirect" href="{% url 'myapp:download' %}">Download</a>
+                <a class="btn btn-primary disabled" id="link-with-redirect" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Download</a>
             {% else %}
                 <button class="btn btn-danger" type="submit" value="delete">Delete</button>
-                <a class="btn btn-primary" id="link-with-redirect" href="{% url 'myapp:download' %}">Download</a>
+                <a class="btn btn-primary" id="link-with-redirect" href="/inw/download/{{selectform.upload.value}}">Download</a>
             {% endif %}
         </div>
 
