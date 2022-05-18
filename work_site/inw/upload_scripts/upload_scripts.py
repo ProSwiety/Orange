@@ -1,4 +1,15 @@
 import pandas as pd
+
+
+def handle_uploaded(file):
+    files = file
+
+    if len(files['file[0]']) > len(files['file[1]']):
+        return files['file[0]'], files['file[1]']
+    else:
+        return files['file[1]'], files['file[0]']
+
+
 def excel_inf_to_list(excel):
     df_inw = excel
     list_inw = df_inw.iloc[:, 0].tolist()

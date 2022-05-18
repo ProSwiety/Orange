@@ -2,10 +2,22 @@
 
 {% block title %} Inw {% endblock %}
 
+{% load static %}
+{% block script %}
+<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
 {% block content %}
-<form method="post" enctype="multipart/form-data">
+<form method="post" action="{% url 'myapp:upload' %}" class="dropzone" id="my-awesome-dropzone">
     {% csrf_token %}
-    {{form}}
-    <button class="btn btn-primary" type="submit">Wyślij</button>
+    <div class="fallback">
+        <input type="file" value="file" multiple/>
+    </div>
+    <button type="submit" id="button" class="btn btn-primary">Submit</button>
+    <script src="{% static 'js/dropzone_settings.js' %}"></script>
 </form>
+
+
 {% endblock %}
