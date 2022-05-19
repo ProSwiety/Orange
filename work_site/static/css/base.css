@@ -20,7 +20,7 @@ body {
 
 .dz {
     background-color: transparent;
-    border: 5px solid #ffffff !important;
+    border: none !important;
     border-radius: 350px !important;
     margin: 5% auto auto auto;
     width: 60%;
@@ -32,14 +32,10 @@ body {
 }
 
 .dz-message {
-    margin: 26% auto auto auto !important;
+    margin: auto !important;
     color: #f16e00;
 }
 
-.dz-preview {
-    margin 20% auto auto 10% !important;
-
-}
 
  .dz-button {
     font-size: 32px !important;
@@ -88,6 +84,10 @@ table {
 .btn-primary {
     background-color: #f16e00;
     border-color: #ff811a;
+}
+
+.m1 {
+    margin-bottom: 10px !important;
 }
 
 .btn-primary:hover {
