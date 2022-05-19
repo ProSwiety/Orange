@@ -67,6 +67,10 @@ body {
 
 }
 
+table {
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+}
 
 .container{
     background-clip: content-box;
@@ -74,7 +78,7 @@ body {
 
 .formElement {
    background-color: #ffffff;
-   border: 5px solid #f2f2f2;
+   border-bottom: 5px solid #f2f2f2;
 }
 
 .btn-primary {
