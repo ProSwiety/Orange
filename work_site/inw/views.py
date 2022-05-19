@@ -6,7 +6,7 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, Alignment
 from datetime import datetime
 from .models import InwModel, UploadModel
-from .forms import UploadFileForm, CreateDataForm, SurplusLackInputForm, UploadModelFormSelect
+from .forms import CreateDataForm, SurplusLackInputForm, UploadModelFormSelect,EditForm
 from django.views.generic import View, UpdateView, CreateView
 from django.http import HttpResponse
 from django.contrib import messages
@@ -104,11 +104,19 @@ class ConfirmDeleteList(LoginRequiredMixin, View):
             objects = product.objects.filter(id__in=id_list)
             return render(request, 'inw/inwmodel_delete_list.html', {'objects': objects})
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         id_list = request.GET.getlist('delete')
         product = InwModel
+        container = UploadModel
+        product_id = product.objects.get(pk=id_list[0])
+        field_name_val = getattr(product_id, 'upload')
         product.objects.filter(id__in=id_list).delete()
-        messages.add_message(request, messages.SUCCESS, 'Delete')
+        field_len = len(field_name_val.set.all())
+        if field_len == 0:
+            container.objects.get(name=field_name_val).delete()
+            messages.add_message(request, messages.SUCCESS, f'Usunięto wszystkie obiekty w {field_name_val}!')
+            return redirect('inw/table.html')
+        messages.add_message(request, messages.SUCCESS, f'Usunięto {len(id_list)} elementów!')
         return redirect(request.session['previous_page'])
 
 
@@ -119,7 +127,7 @@ class UploadData(LoginRequiredMixin, View):
         return render(request, 'inw/upload_form_page.html')
 
     def post(self, request, *args, **kwargs):
-        from .upload_scripts.upload_scripts import excel_inf_to_list, excel_sap_to_dict, process_excel_files,  \
+        from .upload_scripts.upload_scripts import excel_inf_to_list, excel_sap_to_dict, process_excel_files, \
             handle_uploaded
         from .upload_scripts.user_query_check_NaN import check_NaN
         try:
@@ -159,7 +167,6 @@ class TableData(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, **kwargs):
-        id_select_form = request.GET.get('button')
         checkboxesform = SurplusLackInputForm()
         selectform = UploadModelFormSelect(user=request.user)
         ProductModel = InwModel
@@ -198,12 +205,11 @@ class TableData(LoginRequiredMixin, View):
 
 
 class InwModelCreateView(RedirectToPreviousMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    form = CreateDataForm
+    form_class = CreateDataForm
     model = InwModel
-    fields = ["name", "EAN", "quantity", 'upload']
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('myapp:table')
-    success_message = "%(name)s was created succesfully"
+    success_message = "Obiekt %(name)s został utworzony!"
     login_url = '/login/'
 
     def get_form(self, *args, **kwargs):
@@ -213,9 +219,9 @@ class InwModelCreateView(RedirectToPreviousMixin, LoginRequiredMixin, SuccessMes
 
 
 class InwModelUpdateView(RedirectToPreviousMixin, LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    form_class = EditForm
     model = InwModel
-    fields = ['name', 'quantity']
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('myapp:table')
-    success_message = f"%(name)s was editing succesfully"
+    success_message = f"Obiekt %(name)s został zmieniony!"
     login_url = '/login/'

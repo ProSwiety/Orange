@@ -1,5 +1,124 @@
 body {
-    font-family: Serif;
+    font-family: serif;
+    font-size: 16px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f16e0052)) fixed;
+    color:  #4d4d4d;
+
+}
+
+.form-check-input:checked {
+    background-color: #f16e00;
+    border-color: #ff811a;
+
+}
+
+.form-control:focus {
+    border-color: #ffab66;
+    box-shadow: 0 0 0 0.2rem rgb(255, 199, 153);
+    }
+
+
+.dz {
+    background-color: transparent;
+    border: 5px solid #ffffff !important;
+    border-radius: 350px !important;
+    margin: 5% auto auto auto;
+    width: 60%;
+    background-image: url('/static/images/upload_img.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 431px;
+    height: 663px;
+}
+
+.dz-message {
+    margin: 26% auto auto auto !important;
+    color: #f16e00;
+}
+
+.dz-preview {
+    margin 20% auto auto 10% !important;
+
+}
+
+ .dz-button {
+    font-size: 32px !important;
+    margin: 4% auto auto auto !important;
+    font-family: cursive !important;
+    font-weight: bold;
+ }
+
+.dz-image {
+    background: linear-gradient(to top, #f2f2f23b, #f1742bad) !important;
+}
+
+.dz-size span {
+    background-color: none !important;
+}
+
+.dz-progress {
+
+    border: 3px solid rgb(255 255 255 / 0%) !important;
+    background: rgb(255 255 255 / 0%) !important;
+}
+
+.dz-remove {
+
+
+}
+
+
+.container{
+    background-clip: content-box;
+}
+
+.formElement {
+   background-color: #ffffff;
+   border: 5px solid #f2f2f2;
+}
+
+.btn-primary {
+    background-color: #f16e00;
+    border-color: #ff811a;
+}
+
+.btn-primary:hover {
+    background-color:  #ff811a;
+    border-color:  #f16e00;
+    transition: background-color 0.5s ease-out;
+}
+
+.btn-primary:focus {
+    background-color:  #ff811a;
+    border-color: #f16e00;
+}
+
+.btn-primary.disabled {
+    background-color: #f16e00;
+    border-color: #f16e00;
+}
+
+.btn:focus, .btn:active {
+  border-color: #ffab66;
+  box-shadow: 0 0 0 0.2rem rgb(255, 199, 153);
+}
+
+.form-check-input:focus {
+    border-color: #ffab66;
+    box-shadow: 0 0 0 0.2rem rgb(255, 199, 153);
+}
+
+.form-select:focus {
+    border-color: #ffab66;
+    box-shadow: 0 0 0 0.2rem rgb(255, 199, 153);
+}
+
+
+
+
+.liElement {
+   margin-top: 10px;
+   border: 5px solid transparent;
 }
 
 .mb-0 {
@@ -38,6 +157,8 @@ body {
   color: #fff;
   background-color: #007bff;
 }
+
+
 
 
 

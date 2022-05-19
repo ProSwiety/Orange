@@ -6,7 +6,7 @@ const dz = new Dropzone(".dropzone", {
   addRemoveLinks: true,
   maxFiles: 2,
   acceptedFiles: ('.xlsx'),
-  dictDefaultMessage: 'Umieść pliki SAP,INW tutaj',
+  dictDefaultMessage: 'Umieść Tutaj!',
 
   init: function()
         {

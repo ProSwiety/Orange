@@ -8,7 +8,7 @@
     {% csrf_token %}
     <ul class="list-group">
         {% for object in objects %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li class="list-group-item d-flex justify-content-between align-items-center liElement {">
                 Produkt: {{ object.name }}
                 EAN: {{ object.EAN }}
                 <span class="badge badge-primary badge-pill">{{ object.quantity }}</span>
@@ -16,7 +16,9 @@
 
         {% endfor %}
     </ul>
-    <button type="submit" class="btn btn-danger" name="confirm">Confirm Delete</button>
-    <a class="btn btn-primary" href="{% url 'myapp:table' %}">Wróć</a>
+    <div class="mb-0">
+        <button type="submit" class="btn btn-danger" name="confirm">Confirm Delete</button>
+        <a class="btn btn-primary" href="{% url 'myapp:table' %}">Wróć</a>
+    </div>
 </form>
 {% endblock %}

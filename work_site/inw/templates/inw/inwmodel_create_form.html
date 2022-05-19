@@ -4,13 +4,15 @@
 {% load crispy_forms_tags %}
 <form method="POST">
     <div class="mb-0">
-        <h2>Dodaj</h2>
+        <h1>Dodaj Obiekt</h1>
     </div>
     {% csrf_token %}
-    {{form|crispy}}
-    <div class="mb-0">
-        <button type="submit" class="btn btn-primary btn">Zapisz</button>
-        <a class="btn btn-danger" href="{% url 'myapp:table' %}">Wróć</a>
+    <div>
+        {{form|crispy}}
+        <div class="mb-0">
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+            <a class="btn btn-danger" href="{% url 'myapp:table' %}">Wróć</a>
+        </div>
     </div>
 </form>
 {% endblock %}
