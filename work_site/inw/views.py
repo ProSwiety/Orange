@@ -6,9 +6,9 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, Alignment
 from datetime import datetime
 from .models import InwModel, UploadModel
-from .forms import CreateDataForm, SurplusLackInputForm, UploadModelFormSelect,EditForm
+from .forms import CreateDataForm, SurplusLackInputForm, UploadModelFormSelect, EditForm
 from django.views.generic import View, UpdateView, CreateView
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required

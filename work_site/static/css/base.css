@@ -6,6 +6,15 @@ body {
 
 }
 
+h1 {
+    text-align: center;
+    font-family: Comic Sans MS;
+}
+
+label {
+    font-family: Comic Sans MS;
+}
+
 .form-check-input:checked {
     background-color: #f16e00;
     border-color: #ff811a;
@@ -88,6 +97,10 @@ table {
 
 .m1 {
     margin-bottom: 10px !important;
+}
+
+.btn {
+    font-family: Comic Sans MS;
 }
 
 .btn-primary:hover {

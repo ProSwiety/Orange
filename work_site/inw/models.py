@@ -13,6 +13,7 @@ class UploadModel(models.Model):
     def __str__(self):
         return f'{self.name} {self.date} {self.user}'
 
+
 class InwModel(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
     EAN = models.IntegerField(blank=True, null=True)
@@ -21,8 +22,3 @@ class InwModel(models.Model):
 
     def __str__(self):
         return f'{self.name} {self.EAN} {self.quantity}'
-
-
-
-
-

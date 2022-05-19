@@ -8,18 +8,18 @@ class SurplusLackInputForm(forms.Form):
         'id': "radio-lack",
         'role': "switch",
     }),
-        label= "Braki",
-        label_suffix= ''
-)
+                                    label="Braki",
+                                    label_suffix=''
+                                    )
 
     surplus_check = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput(attrs={
         'class': "form-check-input",
         'id': "radio-lack",
         'role': "switch",
     }),
-        label= "Nadwyżki",
-        label_suffix= ''
-)
+                                       label="Nadwyżki",
+                                       label_suffix=''
+                                       )
 
 
 class EditForm(forms.ModelForm):
@@ -52,7 +52,6 @@ class CreateDataForm(forms.ModelForm):
         help_texts = {
             'upload': 'Wymagane jest wybranie któregoś z zbiorów',
         }
-
 
 
 class UploadModelFormSelect(forms.ModelForm):
