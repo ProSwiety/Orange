@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 app_name = 'myapp'
 
 urlpatterns = [
+    path('table/upload=<int:id>',TableData.as_view(), name='tablekwargs'),
     path('table/',TableData.as_view(), name='table'),
     path('upload/',UploadData.as_view(), name='upload'),
     path('create/',InwModelCreateView.as_view(), name='create'),

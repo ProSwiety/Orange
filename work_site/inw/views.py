@@ -8,7 +8,7 @@ from datetime import datetime
 from .models import InwModel, UploadModel
 from .forms import CreateDataForm, SurplusLackInputForm, UploadModelFormSelect,EditForm
 from django.views.generic import View, UpdateView, CreateView
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
@@ -113,9 +113,9 @@ class ConfirmDeleteList(LoginRequiredMixin, View):
         product.objects.filter(id__in=id_list).delete()
         field_len = len(field_name_val.set.all())
         if field_len == 0:
-            container.objects.get(name=field_name_val).delete()
+            container.objects.get(id=field_name_val.id).delete()
             messages.add_message(request, messages.SUCCESS, f'Usunięto wszystkie obiekty w {field_name_val}!')
-            return redirect('inw/table.html')
+            return redirect(reverse('myapp:table'))
         messages.add_message(request, messages.SUCCESS, f'Usunięto {len(id_list)} elementów!')
         return redirect(request.session['previous_page'])
 
@@ -157,10 +157,16 @@ class UploadData(LoginRequiredMixin, View):
                     sql_data['name'] = new_data['Krótki tekst materiału'][index]
                     model = InwModel(**sql_data)
                     model.save()
-            return redirect('/inw/table')
+            id = getattr(upload_file, 'id')
+            link = reverse('myapp:tablekwargs', kwargs={'id': id})
+            response = {'url': link}
+            messages.add_message(request, messages.SUCCESS, 'Plik został przesłany!')
+            return JsonResponse(response)
         except:
             messages.add_message(request, messages.ERROR, 'Coś poszło nie tak')
-            return render(request, 'inw/upload_form_page.html')
+            link = reverse('myapp:upload')
+            response = {'url': link}
+            return JsonResponse(response)
 
 
 class TableData(LoginRequiredMixin, View):
@@ -200,6 +206,9 @@ class TableData(LoginRequiredMixin, View):
                     products = products.filter(quantity__lt=0)
                     context["products"] = products
                     return render(request, 'inw/table_form.html', context=context)
+                else:
+                    return render(request, 'inw/table_form.html', context=context)
+
         except:
             return render(request, 'inw/table_form.html', context=context)
 
@@ -223,5 +232,5 @@ class InwModelUpdateView(RedirectToPreviousMixin, LoginRequiredMixin, SuccessMes
     model = InwModel
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('myapp:table')
-    success_message = f"Obiekt %(name)s został zmieniony!"
+    success_message = f"Nowa wartość %(quantity)s została dodana!"
     login_url = '/login/'
