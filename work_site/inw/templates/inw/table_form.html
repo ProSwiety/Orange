@@ -30,10 +30,10 @@
         <div class="mb-1">
             {% if selectform.upload.value == None %}
                 <button class="btn btn-danger" type="submit" value="delete" disabled>Usuń</button>
-                <a class="btn btn-primary disabled" id="link-with-redirect" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz Excel</a>
+                <a class="btn btn-primary disabled" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz Excel</a>
             {% else %}
                 <button class="btn btn-danger" type="submit" value="delete">Usuń</button>
-                <a class="btn btn-primary" id="link-with-redirect" href="/inw/download/{{selectform.upload.value}}">Pobierz Excel</a>
+                <a class="btn btn-primary" href="/inw/download/{{selectform.upload.value}}">Pobierz Excel</a>
             {% endif %}
         </div>
 
