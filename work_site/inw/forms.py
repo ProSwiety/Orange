@@ -7,7 +7,6 @@ class SurplusLackInputForm(forms.Form):
         'class': "form-check-input",
         'id': "radio-lack",
         'role': "switch",
-        'value': "lack"
     }),
         label= "Braki",
         label_suffix= ''
@@ -17,7 +16,6 @@ class SurplusLackInputForm(forms.Form):
         'class': "form-check-input",
         'id': "radio-lack",
         'role': "switch",
-        'value': "surplus"
     }),
         label= "Nadwyżki",
         label_suffix= ''

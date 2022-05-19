@@ -158,7 +158,7 @@ class UploadData(LoginRequiredMixin, View):
                     model = InwModel(**sql_data)
                     model.save()
             id = getattr(upload_file, 'id')
-            link = reverse('myapp:tablekwargs', kwargs={'id': id})
+            link = reverse('myapp:table')
             response = {'url': link}
             messages.add_message(request, messages.SUCCESS, 'Plik został przesłany!')
             return JsonResponse(response)
@@ -179,37 +179,28 @@ class TableData(LoginRequiredMixin, View):
         productContainerModel = UploadModel
         context = {
             'checkboxesform': checkboxesform,
-            'selectform': selectform
+            'selectform': selectform,
         }
         intaial_data = {
 
         }
-
         try:
             if checkboxesform.is_valid and selectform.is_valid:
                 productcontainer = productContainerModel.objects.get(id=request.GET['upload'])
+                products = ProductModel.objects.filter(upload=productcontainer)
                 intaial_data['upload'] = productcontainer
                 context['selectform'] = UploadModelFormSelect(initial=intaial_data, user=request.user)
-                if 'lack_check' in request.GET and 'surplus_check' in request.GET:
-                    products = ProductModel.objects.filter(upload=productcontainer)
-                    context["products"] = products
-                    return render(request, 'inw/table_form.html', context=context)
-                elif 'surplus_check' in request.GET:
+                if 'surplus_check' in request.GET and 'lack_check' not in request.GET:
                     checkboxesform.fields['lack_check'].initial = False
-                    products = ProductModel.objects.filter(upload=productcontainer)
                     products = products.filter(quantity__gt=0)
                     context["products"] = products
-                    return render(request, 'inw/table_form.html', context=context)
-                elif 'lack_check' in request.GET:
+                elif 'lack_check' in request.GET and 'surplus_check' not in request.GET:
                     checkboxesform.fields['surplus_check'].initial = False
-                    products = ProductModel.objects.filter(upload=productcontainer)
                     products = products.filter(quantity__lt=0)
                     context["products"] = products
-                    return render(request, 'inw/table_form.html', context=context)
                 else:
-                    return render(request, 'inw/table_form.html', context=context)
-
-        except:
+                    context["products"] = products
+        finally:
             return render(request, 'inw/table_form.html', context=context)
 
 
