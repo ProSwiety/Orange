@@ -67,6 +67,10 @@ body {
 
 }
 
+tr.active {
+   background:#dee2e6;
+}
+
 table {
     border-collapse: separate;
     border-spacing: 0px 10px;
