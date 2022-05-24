@@ -3,12 +3,12 @@
 
 {% block title %} Create {% endblock %}
 
-{% block content %}
 {% load crispy_forms_tags %}
+{% block nav %}
+<h1><img class="header-icon" src="{% static 'images/addHeader.png' %}">Dodaj</h1>
+{% endblock %}
+{% block content %}
 <form method="POST">
-    <div class="mb-0">
-        <h1><img class="header-icon" src="{% static 'images/addHeader.png' %}">Dodaj</h1>
-    </div>
     {% csrf_token %}
     <div>
         {{form|crispy}}

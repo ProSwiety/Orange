@@ -162,7 +162,7 @@ td {
 }
 
 /* NAV */
-nav {
+.nav {
     width: 300px;
     background: white;
     color: rgba(0, 0, 0, 0.87);
@@ -170,9 +170,11 @@ nav {
     clip-path: circle(24px at 32px 24px);
     -webkit-transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
     transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
+    display: inline-block;
+    float: left;
   }
 
-nav:hover {
+.nav:hover {
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
     -webkit-transition-duration: 0.75s;
@@ -227,3 +229,14 @@ a:active { background: #ffca28; }
 .navicon div:after { top: 7px; }
 
 /* NAV FILTER */
+
+.filter {
+    background-color: white;
+    height: 50px;
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    background: #2D2D2DED;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+

@@ -27,17 +27,18 @@
     {% endblock %}
 </head>
 <body>
-<nav>
-    <div class="navicon">
-        <div></div>
-    </div>
-    <a  href="{% url 'home' %}">Home</a>
-    <a  href="{% url 'myapp:upload' %}">Akcesoria</a>
-    <a  href="{% url 'myapp:table' %}">Tabela</a>
-    <a  href="{% url 'myapp:create' %}">Dodaj</a>
-</nav>
+    <nav class="nav">
+        <div class="navicon">
+            <div></div>
+        </div>
+            <a  href="{% url 'home' %}">Home</a>
+            <a  href="{% url 'myapp:upload' %}">Akcesoria</a>
+            <a  href="{% url 'myapp:table' %}">Tabela</a>
+            <a  href="{% url 'myapp:create' %}">Dodaj</a>
+    </nav>
 <div class="container">
-
+    {% block nav %}
+    {% endblock %}
     {% include 'inw/messages.html' %}
     {% block content %}
     {% endblock %}

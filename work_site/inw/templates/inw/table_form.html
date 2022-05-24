@@ -10,33 +10,36 @@
 {% endblock %}
 
 
+{% block nav %}
+<nav class="filter">
+    <form method="GET">
+        <div class="mb-0">
+            {% for checkform in checkboxesform %}
+            <div class="form-check form-check-inline form-switch">
+                {{checkform.label_tag}}{{checkform}}
+            </div>
+            {% endfor %}
+            <div class="form-check form-check-inline">
+                {{ selectform }}
+            </div>
+            <div class="form-check form-check-inline">
+                <button class="btn btn-info" type="submit" value="Check">Filtruj</button>
+            </div>
+            <div class="form-check form-check-inline">
+            {% if selectform.upload.value == None %}
+            <button class="btn btn-danger" form="list" type="submit" value="delete" disabled>Usuń</button>
+            <a class="btn btn-primary disabled" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz Excel</a>
+            {% else %}
+            <button class="btn btn-danger" form="list" type="submit" value="delete">Usuń</button>
+            <a class="btn btn-primary" href="/inw/download/{{selectform.upload.value}}">Pobierz Excel</a>
+            {% endif %}
+            </div>
+        </div>
+    </form>
+</nav>
+{% endblock %}
 {% block content %}
-<form method="GET">
-    <div class="mb-0">
-        {% for checkform in checkboxesform %}
-        <div class="form-check form-check-inline form-switch">
-            {{checkform.label_tag}}{{checkform}}
-        </div>
-        {% endfor %}
-        <div class="form-check form-check-inline">
-            {{ selectform }}
-        </div>
-        <div class="form-check form-check-inline">
-            <button class="btn btn-info" type="submit" value="Check">Filtruj</button>
-        </div>
-    </div>
-</form>
-<form action="{% url 'myapp:list' %}" method="GET">
-    <div class="mb-1">
-        {% if selectform.upload.value == None %}
-        <button class="btn btn-danger" type="submit" value="delete" disabled>Usuń</button>
-        <a class="btn btn-primary disabled" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz Excel</a>
-        {% else %}
-        <button class="btn btn-danger" type="submit" value="delete">Usuń</button>
-        <a class="btn btn-primary" href="/inw/download/{{selectform.upload.value}}">Pobierz Excel</a>
-        {% endif %}
-    </div>
-
+<form action="{% url 'myapp:list' %}" class="inline" id="list" method="GET">
     <table class="table table-hover js-sort-table" id="sortable">
         <thead class="tableElementThead">
         <tr>
