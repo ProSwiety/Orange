@@ -3,9 +3,12 @@
 
 {% block title %} Edit {% endblock %}
 
+{% block nav %}
+<h1><img class="header-icon" src="{% static 'images/editHeader.png' %}">Edytuj</h1>
+{% endblock %}
+
 {% block content %}
 {% load crispy_forms_tags %}
-<h1><img class="header-icon" src="{% static 'images/editHeader.png' %}">Edytuj</h1>
 <form method="POST">
     {% csrf_token %}
     {{form|crispy}}

@@ -9,6 +9,10 @@
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+{% block nav %}
+<h1>Upload</h1>
+{% endblock %}
+
 {% block content %}
 <form method="post" action="{% url 'myapp:upload' %}" class="dropzone dz" id="my-awesome-dropzone">
     {% csrf_token %}

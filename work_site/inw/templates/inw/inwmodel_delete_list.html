@@ -3,11 +3,11 @@
 
 {% block title %} Delete {% endblock %}
 
-{% block content %}
-<div>
-    <h1><img class="header-icon" src="{% static 'images/deleteHeader.png' %}">Czy chcesz usunąć ?</h1>
+{% block nav %}
+<h1><img class="header-icon" src="{% static 'images/deleteHeader.png' %}">Czy chcesz usunąć ?</h1>
+{% endblock %}
 
-</div>
+{% block content %}
 <form method="POST">
     {% csrf_token %}
     <ul class="list-group">
@@ -17,7 +17,6 @@
                 EAN: {{ object.EAN }}
                 <span class="badge badge-primary badge-pill">{{ object.quantity }}</span>
             </li>
-
         {% endfor %}
     </ul>
     <div class="mb-0">
