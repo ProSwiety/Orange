@@ -1,20 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Edit {% endblock %}
 
 {% block content %}
 {% load crispy_forms_tags %}
+<h1><img class="header-icon" src="{% static 'images/editHeader.png' %}">Edytuj</h1>
 <form method="POST">
     {% csrf_token %}
+    {{form|crispy}}
     <div class="mb-0">
-        <h1>Edytuj</h1>
-    </div>
-    <div>
-        {{form|crispy}}
-        <div class="mb-0">
-            <button class="btn btn-primary col-12 m1" type="submit">Zapisz</button>
-            <a class="btn btn-danger col-12 m1" href="{% url 'myapp:table' %}">Wróć</a>
-        </div>
+        <button class="btn btn-primary col-12 m1" type="submit">Zapisz</button>
+        <a class="btn btn-danger col-12 m1" href="{% url 'myapp:table' %}">Wróć</a>
     </div>
 </form>
 {% endblock %}

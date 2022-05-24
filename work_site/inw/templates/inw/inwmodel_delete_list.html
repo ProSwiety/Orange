@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Delete {% endblock %}
 
 {% block content %}
-<h1>Czy chcesz usunąć ?</h1>
+<div>
+    <h1><img class="header-icon" src="{% static 'images/deleteHeader.png' %}">Czy chcesz usunąć ?</h1>
+
+</div>
 <form method="POST">
     {% csrf_token %}
     <ul class="list-group">

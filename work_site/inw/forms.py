@@ -42,7 +42,7 @@ class CreateDataForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': "form-control", 'placeholder': "Etui"}),
             'EAN': forms.NumberInput(attrs={'class': "form-control", 'placeholder': "123456789"}),
             'quantity': forms.NumberInput(attrs={'class': "form-control"}),
-            'upload': forms.Select(attrs={"class": "form-control", }),
+            'upload': forms.Select(attrs={"class": "form-select", }),
         }
         labels = {
             'name': 'Nazwa',
