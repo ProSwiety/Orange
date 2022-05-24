@@ -23,8 +23,6 @@
         </div>
         <div class="form-check form-check-inline">
             <button class="btn btn-info" type="submit" value="Check">Filtruj</button>
-        </div>
-        <div class="form-check form-check-inline">
             {% if selectform.upload.value == None %}
             <button class="btn btn-danger" form="list" type="submit" value="delete" disabled>Usuń</button>
             <a class="btn btn-primary disabled" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz
