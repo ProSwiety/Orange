@@ -11,26 +11,26 @@
 
 
 {% block nav %}
-
 <div class="form-control" id="flex">
     <h1>Tabela</h1>
     <form method="GET">
         {{ selectform }}
-        <button class="btn btn-info" type="submit" value="Check">Filtruj</button>
-        {% if selectform.upload.value == None %}
-        <button class="btn btn-danger" form="list" type="submit" value="delete" disabled>Usuń</button>
-        <a class="btn btn-primary disabled" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz Excel</a>
-        {% else %}
-        <button class="btn btn-danger" form="list" type="submit" value="delete">Usuń</button>
-        <a class="btn btn-primary" href="/inw/download/{{selectform.upload.value}}">Pobierz Excel</a>
-        {% endif %}
-        {% for checkform in checkboxesform %}
-        <div class="form-check form-switch" id="inline">
-            {{checkform}}{{checkform.label_tag}}
+        <div class="buttons">
+            <button class="btn btn-info" type="submit" value="Check">Filtruj</button>
+            {% if selectform.upload.value == None %}
+                <button class="btn btn-danger" form="list" type="submit" value="delete" disabled>Usuń</button>
+                <a class="btn btn-primary disabled" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz Excel</a>
+            {% else %}
+                <button class="btn btn-danger" form="list" type="submit" value="delete">Usuń</button>
+                <a class="btn btn-primary" href="/inw/download/{{selectform.upload.value}}">Pobierz Excel</a>
+            {% endif %}
         </div>
-        {% endfor %}
+            {% for checkform in checkboxesform %}
+                <div class="form-check form-switch" id="inline">
+                    {{checkform}}{{checkform.label_tag}}
+                </div>
+            {% endfor %}
     </form>
-
     {% endblock %}
     {% block content %}
     <form action="{% url 'myapp:list' %}" class="inline" id="list" method="GET">

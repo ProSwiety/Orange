@@ -129,14 +129,22 @@ td {
 }
 
 #inline {
-    display: block;
-    float: inline-end;
+    display: inline-flex;
+    float: right;
     padding-left: 4.5em;
+}
+
+.buttons {
+
+    display: inline-flex;
+    float: left;
 }
 
 #flex {
     display: flex;
     flex-direction: column;
+    background-color: transparent !important;
+    box-shadow: none;
 }
 
 /* delete view */
@@ -274,5 +282,45 @@ td {
 .left {
     position: absolute;
     height: 1000px;
+}
+
+/* UPLOAD */
+
+.dropzone {
+    background-image: url('/static/images/upload.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    border: None !important;
+    height: 30rem;
+    display: flex;
+    justify-content: center;
+    place-items: flex-start;
+
+}
+
+.dz-preview {
+    margin: 0 !important;
+    margin-left: 10% !important;
+    margin-right: 10% !important;
+}
+
+.dz-image {
+    background: #b3b3b352 !important;
+    width: 166px !important;
+    height: 166px !important;
+}
+
+.dz-details {
+    color:white !important;
+}
+
+.dz-filename span {
+    background-color: none !important;
+    }
+
+
+.dz-remove {
+    color: white !important;
+    text-decoration: none !important;
 }
 
