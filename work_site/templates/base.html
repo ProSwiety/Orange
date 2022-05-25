@@ -30,21 +30,23 @@
     {% endblock %}
 </head>
 <body>
-<nav class="nav sticky">
-    <div class="navicon">
-        <div></div>
-    </div>
-    {% if user.is_authenticated %}
-    <span class="nav-item-span">Zalogowany jako {{user.username}}</span>
-    <a class="nav-item" href="{% url 'home' %}">Home</a>
-    <a class="nav-item" href="{% url 'myapp:upload' %}">Akcesoria</a>
-    <a class="nav-item" href="{% url 'myapp:table' %}">Tabela</a>
-    <a class="nav-item" href="{% url 'myapp:create' %}">Dodaj</a>
-    <a class="nav-item" href="{% url 'logout' %}">Wyloguj</a>
-    {% else %}
-    <a class="nav-item" href="{% url 'login' %}">Login</a>
-    {% endif %}
-</nav>
+<div class="left">
+    <nav class="nav sticky">
+        <div class="navicon">
+            <div></div>
+        </div>
+        {% if user.is_authenticated %}
+        <span class="nav-item-span">Zalogowany jako {{user.username}}</span>
+        <a class="nav-item" href="{% url 'home' %}">Home</a>
+        <a class="nav-item" href="{% url 'myapp:upload' %}">Akcesoria</a>
+        <a class="nav-item" href="{% url 'myapp:table' %}">Tabela</a>
+        <a class="nav-item" href="{% url 'myapp:create' %}">Dodaj</a>
+        <a class="nav-item" href="{% url 'logout' %}">Wyloguj</a>
+        {% else %}
+        <a class="nav-item" href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </nav>
+</div>
 <div class="container">
     {% block nav %}
     {% endblock %}

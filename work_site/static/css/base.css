@@ -37,6 +37,9 @@ h1 {
   text-align: center;
 }
 
+.alert {
+    display: flow-root
+}
 /* ICONS */
 .icon {
     width: 24px;
@@ -125,6 +128,17 @@ td {
 
 }
 
+#inline {
+    display: block;
+    float: inline-end;
+    padding-left: 4.5em;
+}
+
+#flex {
+    display: flex;
+    flex-direction: column;
+}
+
 /* delete view */
 .list-group-item {
     background-color: #2D2D2DED;
@@ -163,7 +177,7 @@ td {
 
 /* NAV */
 .nav {
-    width: 220px;
+    width: 178px;
     background: #2D2D2DED;
     color: rgba(202, 202, 202, 0.87);
     -webkit-clip-path: circle(24px at 30px 24px);
@@ -246,24 +260,19 @@ td {
 	top: 0;
 }
 
-/* NAV FILTER */
+#navbar {
+    margin-left: 0;
+}
 
-.filter {
-    background-color: white;
-    height: 50px;
-    margin: auto;
-    width: 100%;
-    padding: 10px;
-    background: #2D2D2DED;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+.margin {
+    margin: 1px;
+    width: 178px;
+    height: 399px;
+    position: absolute;
 }
 
 .left {
-    text-align: left;
+    position: absolute;
+    height: 1000px;
 }
-
-.right {
-    text-align: right;
-}
-
 
