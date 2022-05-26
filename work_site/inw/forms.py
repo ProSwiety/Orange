@@ -2,6 +2,7 @@ from django import forms
 from .models import InwModel, UploadModel
 
 
+
 class SurplusLackInputForm(forms.Form):
     lack_check = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput(attrs={
         'class': "form-check-input",
@@ -71,3 +72,4 @@ class UploadModelFormSelect(forms.ModelForm):
         super(UploadModelFormSelect, self).__init__(**kwargs)
         if user:
             self.fields['upload'].queryset = UploadModel.objects.filter(user=user)
+

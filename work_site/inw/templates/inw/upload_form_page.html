@@ -11,6 +11,7 @@
 
 {% block nav %}
 <h1>Upload</h1>
+{% include 'inw/messages.html' %}
 {% endblock %}
 
 {% block content %}
@@ -22,6 +23,7 @@
     <button type="submit" id="button" class="invisible">Submit</button>
     <script src="{% static 'js/dropzone_settings.js' %}"></script>
 </form>
+<p class="info">Umieść Pliki na górze!</p>
 <label for="button" class="btn btn-primary col-12" tabindex="0">Submit</label>
 
 

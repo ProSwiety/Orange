@@ -12,24 +12,26 @@
 
 {% block nav %}
 <div class="form-control" id="flex">
-    <h1>Tabela</h1>
+    <h1 id="Th1">Tabela</h1>
+    {% include 'inw/messages.html' %}
     <form method="GET">
-        {{ selectform }}
         <div class="buttons">
-            <button class="btn btn-info" type="submit" value="Check">Filtruj</button>
+            <button class="btn btn-info btn-10-em" type="submit" value="Check">Filtruj</button>
             {% if selectform.upload.value == None %}
-                <button class="btn btn-danger" form="list" type="submit" value="delete" disabled>Usuń</button>
-                <a class="btn btn-primary disabled" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz Excel</a>
+            <button class="btn btn-danger btn-10-em" form="list" type="submit" value="delete" disabled>Usuń</button>
+            <a class="btn btn-primary btn-10-em disabled" href="{% url 'myapp:download' %}{{selectform.upload.value}}">Pobierz
+                Excel</a>
             {% else %}
-                <button class="btn btn-danger" form="list" type="submit" value="delete">Usuń</button>
-                <a class="btn btn-primary" href="/inw/download/{{selectform.upload.value}}">Pobierz Excel</a>
+            <button class="btn btn-danger btn-10-em" form="list" type="submit" value="delete">Usuń</button>
+            <a class="btn btn-primary btn-10-em" href="/inw/download/{{selectform.upload.value}}">Pobierz Excel</a>
             {% endif %}
         </div>
-            {% for checkform in checkboxesform %}
-                <div class="form-check form-switch" id="inline">
-                    {{checkform}}{{checkform.label_tag}}
-                </div>
-            {% endfor %}
+        {% for checkform in checkboxesform %}
+        <div class="form-check form-switch" id="inline">
+            {{checkform}}{{checkform.label_tag}}
+        </div>
+        {% endfor %}
+        {{ selectform }}
     </form>
     {% endblock %}
     {% block content %}
@@ -38,7 +40,8 @@
             <thead class="tableElementThead">
             <tr>
                 {% if selectform.upload.value == None %}
-                <th><input class="form-check-input" id="flexCheckDisabled" type="checkbox" onClick="toggle(this)" disabled>
+                <th><input class="form-check-input" id="flexCheckDisabled" type="checkbox" onClick="toggle(this)"
+                           disabled>
                 </th>
                 {% else %}
                 <th><input class="form-check-input" type="checkbox" onClick="toggle(this)"></th>
