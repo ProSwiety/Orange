@@ -36,7 +36,8 @@
             <div></div>
         </div>
         {% if user.is_authenticated %}
-        <span class="nav-item-span">Zalogowany jako {{user.username}}</span>
+        <span class="nav-item-span">Zalogowany jako</span>
+        <a class="nav-item" href="{% url 'myauth:profile' %}">{{user.username}}</a>
         <a class="nav-item" href="{% url 'home' %}">Home</a>
         <a class="nav-item" href="{% url 'myapp:upload' %}">Akcesoria</a>
         <a class="nav-item" href="{% url 'myapp:table' %}">Tabela</a>

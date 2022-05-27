@@ -1,6 +1,17 @@
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from django import forms
+from django.forms import ModelForm
+from django.contrib.auth.models import User
 
+
+
+class UserEmailForm(ModelForm):
+
+    email = forms.EmailField(required=True,widget=forms.TextInput)
+
+    class Meta:
+        model = User
+        fields = ('email',)
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
