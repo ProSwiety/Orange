@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Home {% endblock %}
 
 {% block content %}
 
-<h1>Home Page</h1>
+<h1><img class="header-icon" src="{% static 'images/home_icon.png' %}">Home Page</h1>
+{% include 'inw/messages.html' %}
 
 {% endblock %}

@@ -1,11 +1,12 @@
 from django.urls import path, include, reverse_lazy
-from .views import CustomLoginView, ProfileView, DeleteModel, UpdateEmail, PasswordChange, UploadModelList
+from .views import CustomLoginView, ProfileView, DeleteModel, UpdateEmail, PasswordChange, UploadModelList, CreateUser
 from django.contrib.auth import views as auth_views
 
 app_name = 'myauth'
 
 urlpatterns = [
 
+    path('create_user/', CreateUser.as_view(), name='create_user'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('delete_inw/<int:pk>', DeleteModel.as_view(), name='delete_inw'),
     path('update_email/<int:pk>', UpdateEmail.as_view(), name='update_email'),

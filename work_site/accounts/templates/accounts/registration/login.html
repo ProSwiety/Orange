@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Login {% endblock %}
 
 {% load crispy_forms_tags %}
 {% block content %}
-<h1>Login</h1>
+<h1><img class="header-icon" src="{% static 'images/login_icon.png' %}">Login</h1>
 {% if form.errors %}
     <p>Nazwa użytkownika lub hasło jest niepoprawne, spróbuj jeszcze raz!</p>
 {% endif %}
@@ -17,5 +18,7 @@
     </div>
 </form>
 <a class="link" href="{% url 'myauth:password_reset' %}">Zapomniałeś hasła?</a>
+<span>/</span>
+<a class="link" href="{% url 'myauth:create_user' %}">Zarejestruj się</a>
 
 {% endblock %}

@@ -2,25 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70e43010-461f-430d-be80-a366c68d7959" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/work_site/static/images/profile_icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/work_site/static/images/table_icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/work_site/static/images/upload_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work_site/static/images/home_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work_site/static/images/login_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work_site/static/images/password_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work_site/static/images/register_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/accounts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/delete_model.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/delete_model.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/update_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/update_email.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/inw/templates/inw/inwmodel_delete_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/templates/inw/inwmodel_delete_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/inw/templates/inw/table_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/templates/inw/table_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/inw/templates/inw/upload_form_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/templates/inw/upload_form_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/inw/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/static/images/default-profile.png" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/static/images/profile_image.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/static/images/upload.png" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/static/images/upload_picture.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/inw/upload_scripts/user_query_check_NaN.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/upload_scripts/user_query_check_NaN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/templates/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +53,8 @@
       <recent name="C:\Users\Prosik\OneDrive\Dokumenty\GitHub\Orange\work_site\static\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Prosik\OneDrive\Dokumenty\GitHub\Orange\work_site\accounts\templates\accounts" />
       <recent name="C:\Users\Prosik\OneDrive\Dokumenty\GitHub\Orange\work_site\static\images" />
+      <recent name="C:\Users\Prosik\OneDrive\Dokumenty\GitHub\Orange\work_site\accounts\templates\accounts" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

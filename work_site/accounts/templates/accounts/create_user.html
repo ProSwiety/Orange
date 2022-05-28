@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<h1><img class="header-icon" src="{% static 'images/register_icon.png' %}">Rejestracja</h1>
+{% include 'inw/messages.html' %}
+<h2>Utwórz użytkownika</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button class="btn btn-primary col-12" type="submit">Rejestacja</button>
+    <a class="btn btn-danger col-12" href="{% url 'myauth:login' %}">Wróć</a>
+</form>
+<a class="link" href="{% url 'myauth:login' %}">Masz już konto? Zaloguj się!</a>
+{% endblock %}
