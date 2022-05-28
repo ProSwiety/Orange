@@ -74,9 +74,10 @@ h2 {
 }
 
 .form-control:focus {
-    background-color: #2D2D2DED;
+    background-color: #f7f7f7b3;
     border-color: white;
 }
+
 /* CHECKBOXES */
 
 .form-check-input:checked {
@@ -263,7 +264,7 @@ td {
 .nav-item:active { background: rgba(255, 255, 255, 0.87); }
 
 .navicon {
-    padding: 23px 20px;
+    padding: 22px 22px;
     cursor: pointer;
     -webkit-transform-origin: 32px 24px;
     -ms-transform-origin: 32px 24px;
@@ -529,6 +530,10 @@ a:hover {
     .btn-10-em {
         width: inherit;
     }
+    .header-icon {
+        width: 32px;
+        height: 32px;
+    }
 }
 
 @media (max-width: 548px){
@@ -555,6 +560,13 @@ a:hover {
     #inline {
         float: left;
     }
+    .first {
+        margin: 0;
+    }
+
+    .second {
+        margin: 0;
+    }
 }
 
 @media (max-width: 395px){
@@ -579,6 +591,22 @@ a:hover {
     }
     #inline {
         float: left;
+    }
+    .header-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .first {
+        margin: 0;
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .second {
+        margin: 0;
+        padding: 0 0 0 5px;
+        border-left: 1px solid #ffffff54;
     }
 }
 

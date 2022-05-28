@@ -12,8 +12,12 @@
         <h2>Salon: {{user.username}}</h2>
         <p>Email: {{user.email}}</p>
         <div class="inline">
-            <a href="/accounts/update_email/{{user.id}}"><button class="btn btn-info">Zmień Email</button></a>
-            <a href="/accounts/password_change/{{user.id}}"><button class="btn btn-info">Zmień Hasło</button></a>
+            <a href="/accounts/update_email/{{user.id}}">
+                <button class="btn btn-info">Zmień Email</button>
+            </a>
+            <a href="/accounts/password_change/{{user.id}}">
+                <button class="btn btn-info">Zmień Hasło</button>
+            </a>
         </div>
 
     </div>
@@ -22,8 +26,8 @@
         {% for models in model %}
         <ul>
             <li><a class="link" href="/accounts/list/{{models.id}}">
-                    {{models}}
-                </a>
+                {{models.name}} {{models.date}}
+            </a>
                 <a href="/accounts/delete_inw/{{models.id}}">
                     <img class="icon" src="{% static 'images/x-button.png' %}">
                 </a>
