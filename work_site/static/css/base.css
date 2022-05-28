@@ -19,6 +19,11 @@ h1 {
     margin-block-end: 0 !important;
 }
 
+h2 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
 
 /* MESSAGES */
 .alert-success {
@@ -53,9 +58,12 @@ h1 {
     margin-left: 5px;
 }
 .header-icon {
-    width: 55px;
-    height: 55x;
-    margin-top: 5px;
+    width: 40px;
+    height: 40px;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    margin-right: 20px;
+    float: right;
 }
 /* ADD/EDIT VIEW */
 .form-control {
@@ -159,6 +167,11 @@ td {
 }
 
 /* delete view */
+.list-group {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
 .list-group-item {
     background-color: #2D2D2DED;
     margin-bottom: 5px;
@@ -173,7 +186,7 @@ td {
 }
 
 .badge-primary {
-  background-color: #486293;
+  background-color: #486293 !important;
 }
 /* buttons */
 
@@ -300,7 +313,7 @@ td {
 /* UPLOAD */
 
 .dropzone {
-    background-image: url('/static/images/upload.png');
+    background-image: url('/static/images/upload_picture.png');
     background-repeat: no-repeat;
     background-position: center;
     border: None !important;
@@ -439,6 +452,15 @@ dz.size, span {
     margin: 40px;
     padding: 20px;
     border-left: 2px solid #ffffff54;
+}
+
+.link {
+    color: #e1e4e8;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #81e2ff;
 }
 
 /* MEDIA RESOLUTION */

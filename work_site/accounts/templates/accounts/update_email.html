@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Update{% endblock %}
 
+{% load crispy_forms_tags %}
 {% block content %}
+
+<h1><img class="header-icon" src="{% static 'images/editHeader.png' %}">Zmiana Email</h1>
+<h2>Aktualizacja {{object}}</h2>
 
 <form method="POST">
     {% csrf_token %}
-    <div class="form-control">
-        <h2>Aktualizacja {{object}}</h2>
-        {{form}}
-        <button class="btn btn-primary">Update</button>
-    </div>
+    {{form|crispy}}
+    <button class="btn btn-primary col-12">Update</button>
+    <a class='btn btn-danger col-12' href="{% url 'myauth:profile' %}">Wróć</a>
 </form>
 
 {% endblock %}

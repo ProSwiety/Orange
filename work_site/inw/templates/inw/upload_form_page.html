@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Upload {% endblock %}
 
@@ -10,7 +11,7 @@
 {% endblock %}
 
 {% block nav %}
-<h1>Upload</h1>
+<h1><img class="header-icon" src="{% static 'images/upload_icon.png' %}">Upload</h1>
 {% include 'inw/messages.html' %}
 {% endblock %}
 

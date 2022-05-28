@@ -3,11 +3,13 @@
 
 {% block title %} Delete {% endblock %}
 
-{% block nav %}
-<h1><img class="header-icon" src="{% static 'images/deleteHeader.png' %}">Czy chcesz usunąć ?</h1>
-{% endblock %}
+
+
+
 
 {% block content %}
+<h1><img class="header-icon" src="{% static 'images/deleteHeader.png' %}">Czy chcesz usunąć ?</h1>
+
 <form method="POST">
     {% csrf_token %}
     <ul class="list-group">

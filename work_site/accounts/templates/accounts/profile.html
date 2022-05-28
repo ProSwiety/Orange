@@ -4,24 +4,30 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<h1>Profil</h1>
+<h1>Profil<img class="header-icon" src="{% static 'images/profile_icon.png' %}"></h1>
+{% include 'inw/messages.html' %}
 <div class="wrapper">
     <div class="first">
-        <img class="picture" src="{% static 'images/default-profile.png' %}">
+        <img class="picture" src="{% static 'images/profile_image.png' %}">
         <h2>Salon: {{user.username}}</h2>
         <p>Email: {{user.email}}</p>
         <div class="inline">
             <a href="/accounts/update_email/{{user.id}}"><button class="btn btn-info">Zmień Email</button></a>
-            <a href="#"><button class="btn btn-info">Zmień Hasło</button></a>
+            <a href="/accounts/password_change/{{user.id}}"><button class="btn btn-info">Zmień Hasło</button></a>
         </div>
-
 
     </div>
     <div class="second">
         <h2>Aktywne inwentaryzacje</h2>
         {% for models in model %}
         <ul>
-            <li>{{models}}<a href="/accounts/delete_inw/{{models.id}}"><img class="icon" src="{% static 'images/x-button.png' %}"></a></li>
+            <li><a class="link" href="/accounts/list/{{models.id}}">
+                    {{models}}
+                </a>
+                <a href="/accounts/delete_inw/{{models.id}}">
+                    <img class="icon" src="{% static 'images/x-button.png' %}">
+                </a>
+            </li>
         </ul>
         {% endfor %}
     </div>

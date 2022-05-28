@@ -5,14 +5,17 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <h1>Login</h1>
+{% if form.errors %}
+    <p>Nazwa użytkownika lub hasło jest niepoprawne, spróbuj jeszcze raz!</p>
+{% endif %}
 <form method="POST">
     {% csrf_token %}
     {{form|crispy}}
     <div class="mb-0">
-        <button type="submit" class="btn btn-success col-12 m1">Login</button>
+        <button type="submit" class="btn btn-primary col-12 m1">Login</button>
         <a class="btn btn-danger col-12 m1" href="{% url 'home' %}">Wróć</a>
     </div>
 </form>
-<a href="{% url 'myauth:password_reset' %}">Zapomniałeś hasła?</a>
+<a class="link" href="{% url 'myauth:password_reset' %}">Zapomniałeś hasła?</a>
 
 {% endblock %}
