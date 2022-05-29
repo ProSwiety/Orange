@@ -1,4 +1,5 @@
-from django.contrib.auth.forms import AuthenticationForm, UsernameField, PasswordChangeForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UsernameField, PasswordChangeForm, UserCreationForm, \
+    SetPasswordForm
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
@@ -24,9 +25,10 @@ class CustomCreateUser(UserCreationForm):
         label="Powtórz Hasło",
         label_suffix='',
     )
+
     class Meta:
         model = User
-        fields = ('username','email','password1','password2')
+        fields = ('username', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
         user = super(CustomCreateUser, self).save(commit=False)
@@ -54,14 +56,11 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         attrs={'class': 'form-control', 'type': 'password'}),
         label="Nowe Hasło",
         label_suffix='',
-        help_text=f'Wymagane jest wybranie któregoś z zbiorów'
-
     )
     new_password2 = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'type': 'password'}),
         label="Potwierdź Nowe Hasło",
         label_suffix='',
-
     )
 
     class Meta:
@@ -88,3 +87,23 @@ class UserLoginForm(AuthenticationForm):
         label="Hasło",
         label_suffix=''
     )
+
+
+class CustomResetPassword(SetPasswordForm):
+    new_password1 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'type': 'password'}),
+        label="Nowe Hasło",
+        label_suffix='',
+    )
+    new_password2 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'type': 'password'}),
+        label="Potwierdź Nowe Hasło",
+        label_suffix='',
+    )
+
+    def save(self, *args, commit=True, **kwargs):
+        user = super().save(*args, commit=False, **kwargs)
+        user.is_active = True
+        if commit:
+            user.save()
+        return user

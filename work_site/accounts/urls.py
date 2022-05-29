@@ -1,5 +1,6 @@
 from django.urls import path, include, reverse_lazy
-from .views import CustomLoginView, ProfileView, DeleteModel, UpdateEmail, PasswordChange, UploadModelList, CreateUser
+from .views import CustomLoginView, ProfileView, DeleteModel, UpdateEmail, PasswordChange, UploadModelList, CreateUser, \
+    password_reset_request, PasswordResetConfirm
 from django.contrib.auth import views as auth_views
 
 app_name = 'myauth'
@@ -13,17 +14,14 @@ urlpatterns = [
     path('list/<int:pk>', UploadModelList.as_view(), name='list'),
     path('login/', CustomLoginView.as_view(template_name='accounts/registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('myauth:login')), name='logout'),
-    path('password_reset/',
-         auth_views.PasswordResetView.as_view(template_name='accounts/registration/password_reset_form.html'),
-         name='password_reset'),
     path('password_change/<int:pk>', PasswordChange.as_view(), name='password_change'),
-    path('confirm/',
-         auth_views.PasswordResetConfirmView.as_view(template_name='accounts/registration/password_reset_confirm.html'),
-         name='password_reset_confirm'),
-    path('done/',
+    path('password_reset/', password_reset_request,
+         name='password_reset'),
+    path('password_reset/done/',
          auth_views.PasswordResetDoneView.as_view(template_name='accounts/registration/password_reset_done.html'),
          name='password_reset_done'),
-    path('complete/', auth_views.PasswordResetCompleteView.as_view(
+    path('reset/<uidb64>/<token>/', PasswordResetConfirm.as_view(), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
         template_name='accounts/registration/password_reset_complete.html'), name='password_reset_complete'),
     # path("password_reset", views.password_reset_request, name="password_reset")
 

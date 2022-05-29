@@ -2,11 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70e43010-461f-430d-be80-a366c68d7959" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_email.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/accounts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/create_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/create_user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_complete.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_confirm.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_confirm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_done.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_reset_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/templates/accounts/registration/password_change.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/accounts/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/inw/templates/inw/upload_form_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/templates/inw/upload_form_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/work_site/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/work_site/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,5 +78,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/work_site/work_site/settings.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

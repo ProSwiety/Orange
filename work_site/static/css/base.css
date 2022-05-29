@@ -464,6 +464,11 @@ a:hover {
     color: #81e2ff;
 }
 
+.help-text {
+    color: #cbcacab0;
+    font-size: 14px;
+}
+
 /* MEDIA RESOLUTION */
 
 @media (max-width: 1600px){

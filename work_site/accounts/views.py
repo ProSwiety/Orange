@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import UserLoginForm, UserEmailForm, CustomPasswordChangeForm, CustomCreateUser
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from .forms import UserLoginForm, UserEmailForm, CustomPasswordChangeForm, CustomCreateUser, CustomResetPassword
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetConfirmView
 from django.views.generic import View, DeleteView, UpdateView, ListView
+from django.contrib.auth.forms import PasswordResetForm
 from inw.models import UploadModel, InwModel
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -9,6 +10,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode
+from django.conf import settings
 
 
 # Create your views here.
@@ -87,4 +96,42 @@ class UploadModelList(LoginRequiredMixin, ListView):
 class PasswordChange(PasswordChangeView):
     form_class = CustomPasswordChangeForm
     success_url = '/accounts/profile'
-    template_name = 'accounts/registration/password_reset_form.html'
+    template_name = 'accounts/registration/password_change.html'
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+    model = User
+    form_class = CustomResetPassword
+    template_name = 'accounts/registration/password_reset_confirm.html'
+    success_url = reverse_lazy('myauth:password_reset_complete')
+
+
+def password_reset_request(request):
+    if request.method == "POST":
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Restart Hasła Web Inw"
+                    email_template_name = "accounts/registration/password_reset_email.txt"
+                    c = {
+                        "email": user.email,
+                        'domain': '127.0.0.1:8000',
+                        'site_name': 'Website',
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'http',
+                    }
+                    email = render_to_string(email_template_name, c)
+                    email_from = settings.EMAIL_HOST_USER
+                    try:
+                        send_mail(subject, email, email_from, [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect("done/")
+    form = PasswordResetForm()
+    return render(request=request, template_name="accounts/registration/password_reset.html",
+                  context={"form": form})
