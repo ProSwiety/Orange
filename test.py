@@ -1,29 +1,6 @@
 import pandas as pd
 
 
-def handle_uploaded(file):
-    files = file
-
-    if len(files['file[0]']) > len(files['file[1]']):
-        return files['file[0]'], files['file[1]']
-    else:
-        return files['file[1]'], files['file[0]']
-
-
-def excel_inf_to_list(excel,dict_sap):
-    sap = dict_sap
-    df_inw = excel
-    list_inw = df_inw.iloc[:, 0].tolist()
-    new_list = []
-    if 'START' in sap['Krótki tekst materiału'][0] or 'KARTA' in sap['Krótki tekst materiału'][0]:
-        new_list = ['89480' + str(x) for x in list_inw]
-        new_list = [int(x) for x in list_inw]
-        return new_list
-    else:
-        list_int = [int(x) for x in list_inw]
-        return list_int
-
-
 def excel_sap_to_dict(excel):
     df_sap = excel
     dict_sap = dict()
@@ -41,6 +18,21 @@ def excel_sap_to_dict(excel):
                         dict_sap['Zapas ogółem'][licznik] = int(-1 * (value))
     return dict_sap
 
+
+def excel_inf_to_list(excel,dict_sap):
+    sap = dict_sap
+    df_inw = excel
+    list_inw = df_inw.iloc[:, 0].tolist()
+    new_list = []
+    if 'START' in sap['Krótki tekst materiału'][0] or 'KARTA' in sap['Krótki tekst materiału'][0]:
+        new_list = ['89480' + str(x) for x in list_inw]
+        new_list = [int(x) for x in list_inw]
+        return new_list
+    else:
+        list_int = [int(x) for x in list_inw]
+        return list_int
+
+
 def process_excel_files(inw, sap):
     sap = sap
     inw = inw
@@ -53,11 +45,16 @@ def process_excel_files(inw, sap):
             sap['Zapas ogółem'][index] += 1
         else:
             if 'START' in sap['Krótki tekst materiału'][0] or 'KARTA' in sap['Krótki tekst materiału'][0]:
-                str_value = '89480' + str(value)
-                int_value = int(str_value)
+                int_value = '89480' + str(value)
                 sap['EAN'].append(int_value)
             else:
                 sap['EAN'].append(value)
             sap['Krótki tekst materiału'].append(None)
             sap['Zapas ogółem'].append(1)
     return sap
+
+dfi = pd.read_excel(r'/home/j0ker/Desktop/STAR.xlsx', header=None)
+df = pd.read_excel(r'/home/j0ker/Desktop/SAP_STARTER.xlsx')
+sap = excel_sap_to_dict(df)
+inw = excel_inf_to_list(dfi,sap)
+process_excel_files(inw, sap)

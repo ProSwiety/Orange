@@ -61,7 +61,7 @@ def download_data_as_excel(request, pk):
             if column_title == 'ID' or column_title == 'Ilość':
                 column_dimensions.width = 8
             elif column_title == 'EAN':
-                column_dimensions.width = 20
+                column_dimensions.width = 30
             else:
                 column_dimensions.width = 40
         for model in model_queryset:
@@ -134,12 +134,12 @@ class UploadData(LoginRequiredMixin, View):
             sap, inw = handle_uploaded(request.FILES)
             user = request.user
             df_sap = pd.read_excel(sap)
-            df_inw = pd.read_excel(inw)
-            inw_list = excel_inf_to_list(df_inw)
+            df_inw = pd.read_excel(inw, header=None)
+            inw_list = excel_inf_to_list(df_inw, df_sap)
             sap_dict = excel_sap_to_dict(df_sap)
             new_data = process_excel_files(inw_list, sap_dict)
             user_query = UploadModel.objects.filter(user=user)
-            name = check_NaN(user_query)
+            name = check_NaN(user_query, new_data)
             upload_file = UploadModel(name=name, user=user)
             upload_file.save()
             sql_data = {
