@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 import pandas as pd
 from openpyxl import Workbook
@@ -69,7 +69,7 @@ def download_data_as_excel(request, pk):
             row = [
                 row_num - 1,
                 model.name,
-                model.EAN,
+                str(model.EAN),
                 model.quantity,
             ]
             for col_num, cell_value in enumerate(row, 1):

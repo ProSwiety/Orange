@@ -181,13 +181,38 @@ td {
 }
 
 .badge-pill {
-  padding-right: .6em;
-  padding-left: .6em;
   border-radius: 10rem;
 }
 
 .badge-primary {
   background-color: #486293 !important;
+}
+
+.badge {
+    font-size: 0.8em;
+    font-family: cursive;
+    width: 3em;
+    padding-top: 1em;
+    height: 3em;
+
+}
+
+.deleteTitle {
+    font-size: 20px;
+    color: #8bafff;
+    margin-bottom: 0;
+}
+
+.margin-ean {
+    margin-left: auto;
+    width: 50%;
+    margin-right: auto;
+}
+
+
+.margin-name {
+    width: 50%;
+    margin-right: auto;
 }
 /* buttons */
 
