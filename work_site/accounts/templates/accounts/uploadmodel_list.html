@@ -12,9 +12,15 @@
 <ul class="list-group">
     {% for object in object_list %}
         <li class="list-group-item d-flex justify-content-between align-items-center liElement {">
-            Produkt: {{ object.name }}
-            EAN: {{ object.EAN }}
-            <span class="badge badge-primary badge-pill">{{ object.quantity }}</span>
+                <div class="margin-name">
+                    <p class="deleteTitle">Produkt:</p> {{ object.name }}
+                </div>
+                <div class="margin-ean">
+                    <p class="deleteTitle">EAN:</p>{{ object.EAN }}
+                </div>
+                <div>
+                    <span class="badge badge-primary badge-pill">{{ object.quantity }}</span>
+                </div>
         </li>
     {% endfor %}
 </ul>
