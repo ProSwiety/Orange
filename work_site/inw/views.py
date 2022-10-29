@@ -138,6 +138,12 @@ class UploadData(LoginRequiredMixin, View):
             inw_list = excel_inf_to_list(df_inw, df_sap)
             sap_dict = excel_sap_to_dict(df_sap)
             new_data = process_excel_files(inw_list, sap_dict)
+            new_data_check_null = new_data['Zapas ogółem']
+            if all(x == new_data_check_null[0] for x in new_data_check_null):
+                link = reverse('myapp:table')
+                response = {'url': link}
+                messages.add_message(request, messages.SUCCESS, 'Nie znaleziono żadnych nieprawidłowośći!')
+                return JsonResponse(response)
             user_query = UploadModel.objects.filter(user=user)
             name = check_NaN(user_query, new_data)
             upload_file = UploadModel(name=name, user=user)
@@ -161,12 +167,15 @@ class UploadData(LoginRequiredMixin, View):
             link = reverse('myapp:table')
             response = {'url': link}
             messages.add_message(request, messages.SUCCESS, 'Plik został przesłany!')
-            return JsonResponse(response)
-        except:
-            messages.add_message(request, messages.ERROR, 'Coś poszło nie tak')
+        except KeyError:
+            messages.add_message(request, messages.ERROR, 'Musisz przesłać dwa pliki SAP i INW!')
             link = reverse('myapp:upload')
             response = {'url': link}
-            return JsonResponse(response)
+        except ValueError:
+            messages.add_message(request, messages.ERROR, 'Sprawdź poprawność plików!')
+            link = reverse('myapp:upload')
+            response = {'url': link}
+        return JsonResponse(response)
 
 
 class TableData(LoginRequiredMixin, View):

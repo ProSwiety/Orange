@@ -14,11 +14,10 @@ def excel_inf_to_list(excel,dict_sap):
     sap = dict_sap
     df_inw = excel
     list_inw = df_inw.iloc[:, 0].tolist()
-    new_list = []
     if 'START' in sap['Krótki tekst materiału'][0] or 'KARTA' in sap['Krótki tekst materiału'][0]:
         new_list = ['89480' + str(x) for x in list_inw]
-        new_list = [int(x) for x in list_inw]
-        return new_list
+        new_list_int = [int(x) for x in new_list]
+        return new_list_int
     else:
         list_int = [int(x) for x in list_inw]
         return list_int

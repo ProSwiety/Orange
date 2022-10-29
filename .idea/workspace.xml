@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="70e43010-461f-430d-be80-a366c68d7959" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/work_site/static/js/checkboxClass.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Orange.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Orange.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work_site/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/inw/templates/inw/table_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/templates/inw/table_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/static/css/base.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/inw/upload_scripts/upload_scripts.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/upload_scripts/upload_scripts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work_site/inw/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +40,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Prosik/OneDrive/Dokumenty/GitHub/Orange/work_site/static/images&quot;
+    &quot;last_opened_file_path&quot;: &quot;/home/j0ker/PycharmProjects/projekt/Orange&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -49,6 +53,34 @@
       <recent name="C:\Users\Prosik\OneDrive\Dokumenty\GitHub\Orange\work_site\static\images" />
       <recent name="C:\Users\Prosik\OneDrive\Dokumenty\GitHub\Orange\work_site\accounts\templates\accounts" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="manage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Orange" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/work_site" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/work_site/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.manage" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
