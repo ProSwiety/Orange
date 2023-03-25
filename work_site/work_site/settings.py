@@ -157,3 +157,11 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+
+SECURE_SSL_REDIRECT = False
+
+SECURE_HSTS_SECONDS = False

@@ -1,11 +1,116 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Home {% endblock %}
+{% block title %} FAQ {% endblock %}
 
 {% block content %}
 
-<h1><img class="header-icon" src="{% static 'images/home_icon.png' %}">Home Page</h1>
-{% include 'inw/messages.html' %}
+<h1><img class="header-icon" src="{% static 'images/home_icon.png' %}">FAQ</h1>
 
+{% include 'inw/messages.html' %}
+<div class="container-faq">
+    <h2 class="faq-heading">Jak Korzystać?</h2>
+    <ul>
+        <li class="faq">
+            <div class="question">
+                Przypomnienie oraz zmiana hasła
+                <span class="icon-main">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </div>
+            <div class="answer non-active">
+                Jeśli nie pamiętasz hasła, po wybraniu opcji "zapomniałeś hasła" możesz wpisać adres mailowy który jest podany na koncie logowania,
+                domyślnie powinnien być to email salonowy. Po wysłaniu maila, w ciągu kilku minut powinnien przyjść mail z jednorazowym linkiem do zmiany hasła.
+            </div>
+        </li>
+        <li class="faq">
+            <div class="question">
+                Inwentaryzacja kart SIM
+                <span class="icon-main">                <span class="icon-main">
+
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </div>
+            <p class="answer non-active">
+                Pobierz raport numerów seryjnych kart sim oraz zeskanuj do osobnego pliku excel wszystkie numery seryjne
+                kart sim, numery seryjne powinny znajować się zaczynając od 1 wiersza oraz umieszczone tylko i wyłącznie
+                w 1 kolumnie. Plik z zeskanowymi numerami seryjnymi powinnien mieć krótszą nazwę niż raport numerów seryjnych domyślna zalecana nazwa to "inw"
+                Podczas skanowania plików możesz zauważyć iż numery seryjne nie mają początku 89480, jeśli tak się zdarzy nie dopisuj do żadnego pliku
+                innych numerów, program sam je dopisze jeśli będzie taka potrzeba,
+                Następnie gdy obydwa pliki są już gotowe w zakładce Upload przeciągnij bądź wybierz wyżej wspomniane dwa pliki i poczekaj na rezultat,
+                Program może przetwarzać proces nawet kilka minut.
+            </p>
+        </li>
+        <li class="faq">
+            <div class="question">
+                Inwentaryzacja Starterów i Akcesorii
+                <span class="icon-main">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </div>
+            <p class="answer non-active">
+                Pobierz raport numerów seryjnych akcesorii bądź starterów oraz zeskanuj do osobnego pliku excel wszystkie numery seryjne
+                produktów które chcesz sprawdzić, numery seryjne powinny znajować się zaczynając od 1 wiersza oraz umieszczone tylko i wyłącznie
+                w 1 kolumnie. Plik z zeskanowymi numerami seryjnymi powinnien mieć krótszą nazwę niż raport numerów seryjnych domyślna zalecana nazwa to "inw"
+                Następnie gdy obydwa pliki są już gotowe w zakładce Upload przeciągnij bądź wybierz wyżej wspomniane dwa pliki i poczekaj na rezultat,
+                Program może przetwarzać proces nawet kilka minut.
+            </p>
+        </li>
+        <li class="faq">
+            <div class="question">
+                Kod błędu 1
+                <span class="icon-main">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </div>
+            <div class="answer non-active">
+                <p>1.Plik SAP powinnien być wgrywany bez dokonywania ręcznych modyfikacji,</p>
+                <p>2.Plik SAP powinnien mieć dłuższą nazwę niż plik z inwentaryzacji,</p>
+                <p>3.Sprawdź czy plik SAP zawiera wszystkie kolumny jeśli nie, pobierz go ponownie,</p>
+            </div>
+        </li>
+        <li class="faq">
+            <div class="question">
+                Kod błędu 2
+                <span class="icon-main">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </div>
+            <div class="answer non-active">
+                <p>1.Sprawdź czy na pewno wgrywasz odpowiednie pliki jeden plik to raport SAP drugi plik to inwentaryzacja excel.</p>
+            <p>2.Sprawdź czy w plikach nie występuje numery seryjne zawierające litery, jeśli tak usuń je.</p>
+                <p>3.Sprawdź czy w pliku INW występują puste przestrzenie pomiędzy numerami seryjnymi, jeśli tak uzupełnij bądź zlikwiduj je.</p>
+            </div>
+        </li>
+        <li class="faq">
+            <div class="question">
+                Nieprawidłowy wynik inwentaryzacji
+                <span class="icon-main">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </div>
+            <p class="answer non-active">
+                Sprawdź czy wszystkie numery seryjne są zeskanowe w 1 kolumnie pliku excel do którego zostały zeskanowane produkty,
+                Program sprawdza jedynie numery seryjne które są widoczne w 1 kolumnie pliku excel, plik excel nie powinnien zawierać
+                żadnych innych produktów w pozostałych kolumnach.
+                Jeśli numery seryjne nie zgadzają się w inwetaryzacji kart sim, pamiętaj by w pliku z zeskananymi kartami nie dopisywać pierwszych
+                cyfr 89480, pliki powinny zostać zeskanowane i pozostać w orginalnych numerach bez modyfikacji, jeśli będzie taka potrzeba program
+                sam dopiszę brakujące numery.
+            </p>
+        </li>
+        <li class="faq">
+            <div class="question">
+                What should be included in a FAQ section?
+                <span class="icon-main">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+            </div>
+            <p class="answer non-active">
+                Fully answer the question, don't
+                just link to a different page.
+            </p>
+        </li>
+    </ul>
+</div>
+<script src="{% static 'js/faq.js' %}"></script>
 {% endblock %}

@@ -35,10 +35,11 @@ class RedirectToPreviousMixin:
 def download_data_as_excel(request, pk):
     if request.method == 'GET':
         model_queryset = InwModel.objects.filter(upload=pk)
+        upload_date = UploadModel.objects.get(id=pk)
         response = HttpResponse(
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         )
-        response['Content-Disposition'] = f"attachment; filename={datetime.now().strftime('%Y-%m-%d')}-akcesoria.xlsx"
+        response['Content-Disposition'] = f"attachment; filename={upload_date}-akcesoria.xlsx"
         workbook = Workbook()
         worksheet = workbook.active
         worksheet.title = 'Akcesoria'
@@ -168,11 +169,11 @@ class UploadData(LoginRequiredMixin, View):
             response = {'url': link}
             messages.add_message(request, messages.SUCCESS, 'Plik został przesłany!')
         except KeyError:
-            messages.add_message(request, messages.ERROR, 'Musisz przesłać dwa pliki SAP i INW!')
+            messages.add_message(request, messages.ERROR, 'Musisz przesłać dwa pliki SAP i INW! Kod błędu 1, SPRWADŹ FAQ')
             link = reverse('myapp:upload')
             response = {'url': link}
         except ValueError:
-            messages.add_message(request, messages.ERROR, 'Sprawdź poprawność plików!')
+            messages.add_message(request, messages.ERROR, 'Sprawdź poprawność plików! Kod błędu 2, SPRAWDŹ FAQ')
             link = reverse('myapp:upload')
             response = {'url': link}
         return JsonResponse(response)

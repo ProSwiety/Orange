@@ -7,6 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %} Title {% endblock %}</title>
+    <!-- Faq + icon -->
+        <link rel="stylesheet" href=
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+              integrity=
+                      "sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
     <!-- CSS only -->
@@ -42,7 +48,7 @@
     <span class="nav-item-span">Zalogowany jako</span>
     <a class="nav-item" href="{% url 'myauth:profile' %}">{{user.username}}</a>
     <a class="nav-item" href="{% url 'home' %}">Home</a>
-    <a class="nav-item" href="{% url 'myapp:upload' %}">Akcesoria</a>
+    <a class="nav-item" href="{% url 'myapp:upload' %}">Upload</a>
     <a class="nav-item" href="{% url 'myapp:table' %}">Tabela</a>
     <a class="nav-item" href="{% url 'myapp:create' %}">Dodaj</a>
     <a class="nav-item" href="{% url 'myauth:logout' %}">Wyloguj</a>
