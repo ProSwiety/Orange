@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70e43010-461f-430d-be80-a366c68d7959" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/work_site/static/js/faq.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/inw/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/inw/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work_site/work_site/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/work_site/work_site/settings.py" afterDir="false" />
-    </list>
+    <list default="true" id="70e43010-461f-430d-be80-a366c68d7959" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
